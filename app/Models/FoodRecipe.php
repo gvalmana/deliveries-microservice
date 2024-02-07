@@ -17,6 +17,8 @@ class FoodRecipe extends Model
         'description'
     ];
 
+    public const RELATIONS = ['ingredients'];
+
     protected $hidden = [
         'deleted_at',
         'created_at',

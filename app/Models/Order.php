@@ -21,7 +21,10 @@ class Order extends Model
         'is_sent' => 'boolean',
         'delivery_date' => 'datetime'
     ];
-    public function foodRecipe()
+
+    public const RELATIONS = ['recipe'];
+
+    public function recipe()
     {
         return $this->belongsTo(FoodRecipe::class, 'recipe_id', 'id');
     }
