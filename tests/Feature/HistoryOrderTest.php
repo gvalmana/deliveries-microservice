@@ -20,7 +20,18 @@ class HistoryOrderTest extends TestCase
     public function test_history_orders_can_be_retrived()
     {
         $orders = Order::factory(10)->create();
-        $reponse = $this->getJson(route('history.orders.index'));
-        $reponse->assertOk();
+        $response = $this->getJson(route('history.orders.index'));
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'status',
+                    'code',
+                    'recipe',
+                    'delivery_date',
+                ],
+            ],
+        ]);
+        $response->assertJsonCount(10, 'data');
     }
 }

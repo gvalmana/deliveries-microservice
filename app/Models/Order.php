@@ -28,6 +28,8 @@ class Order extends Model
         'delivery_date' => 'datetime'
     ];
 
+    protected $hiddens = ['recipe_id','is_sent'];
+
     public const RELATIONS = ['recipe'];
 
     public function recipe()

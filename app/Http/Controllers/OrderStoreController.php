@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Http\UseCases\IGetOrderHistory;
 use App\Http\UseCases\IOrderStore;
 use App\Jobs\ProcessCreatedOrderJob;
@@ -24,6 +25,6 @@ class OrderStoreController extends Controller
     {
         $data = $request->all();
         $orders = $service->getOrderHistory($data);
-        return response()->json($orders, 200);
+        return response()->json(['data' => OrderResource::collection($orders)], 200);
     }
 }
