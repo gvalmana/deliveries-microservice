@@ -46,7 +46,7 @@ class ProcessCreatedOrderJob implements ShouldQueue
         $recipe = $this->order->foodRecipe;
         $recipeItems = $recipe->ingredients;
         foreach ($recipeItems as $item) {
-            $ingredients['ingredient_name'] = $item->ingredient->name;
+            $ingredients['name'] = $item->ingredient->name;
             $ingredients['quantity'] = $item->quantity;
         }
         return $ingredients;
