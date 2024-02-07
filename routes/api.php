@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderStoreController;
+use App\Http\Controllers\RecipeListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'orders'], function () {
     Route::post('store', [OrderStoreController::class, 'store'])->name('orders.store');
+});
+
+Route::group(['prefix' => 'recipes'], function () {
+    Route::get('/', [RecipeListController::class, 'index'])->name('recipes.index');
 });
 
 Route::get('/healtcheck', function() {

@@ -14,7 +14,6 @@ class SentStockRequestTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
         $this->seed(DatabaseSeeder::class);
     }
 
