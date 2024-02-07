@@ -6,10 +6,16 @@ use App\Http\Resources\OrderResource;
 use App\Http\UseCases\IGetOrderHistory;
 use App\Http\UseCases\IOrderStore;
 use App\Jobs\ProcessCreatedOrderJob;
+use App\Traits\HttpResponsable;
+use App\Traits\PaginationTrait;
+use App\Traits\ParamsProcessTrait;
 use Illuminate\Http\Request;
 
 class OrderStoreController extends Controller
 {
+    use ParamsProcessTrait;
+    use HttpResponsable;
+    use PaginationTrait;
     public function store(Request $request, IOrderStore $service)
     {
         $data = $request->all();
@@ -23,8 +29,10 @@ class OrderStoreController extends Controller
 
     public function index(Request $request, IGetOrderHistory $service)
     {
-        $data = $request->all();
-        $orders = $service->getOrderHistory($data);
-        return response()->json(['data' => OrderResource::collection($orders)], 200);
+        $params = $this->processParams($request);
+        $orders = $service->getOrderHistory($params);
+        $links = null;
+        $links = $this->makeMetaData($orders);
+        return $this->makeResponseList(OrderResource::collection($orders), $links);
     }
 }
