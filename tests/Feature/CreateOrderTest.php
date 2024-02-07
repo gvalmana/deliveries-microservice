@@ -20,6 +20,12 @@ class CreateOrderTest extends TestCase
 
     public function test_a_order_can_be_created()
     {
+        $data_response = [
+            'enough_stock' => false
+        ];
+        Http::fake([
+            'http://localhost:8001/api/get-stock-ingredients' => Http::response($data_response, 200)
+        ]);
         $data = [
 
         ];
