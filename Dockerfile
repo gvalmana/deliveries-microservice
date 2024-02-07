@@ -1,4 +1,7 @@
-FROM smraalm/php:3.3
+FROM php:8.2-cli
+RUN docker-php-source extract \
+	# do important things \
+	&& docker-php-source delete
 WORKDIR /var/www/html
 COPY php.ini /etc/php/8.1/fpm/php.ini
 COPY site.conf /etc/nginx/sites-available/default
@@ -11,11 +14,14 @@ RUN composer install \
     --no-scripts \
     --prefer-dist \
     --quiet
-COPY .env.example .env
 COPY . .
+COPY .env.example .env
 RUN composer dump-autoload
-RUN php artisan key:generate
-RUN php artisan migrate
 RUN php artisan cache:clear
+RUN php artisan config:clear
 RUN php artisan config:cache
-RUN chmod 777 -R /var/www/html/storage /var/www/html/public
+#RUN php artisan migrate
+RUN php artisan key:generate
+RUN chmod 7777 storage/ -R -v
+RUN chown www-data:www-data -R storage
+RUN chmod o+w /var/www/html/public

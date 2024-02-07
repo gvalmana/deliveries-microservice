@@ -7,12 +7,16 @@ services:
             - 8080:80
         volumes:
             - ./:/var/www/html
+        networks:
+            - alegra-test-network
     database:
         image: mysql
         container_name: deliveries-microservice-db
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: deliveries-microservice-database
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
         env_file:
             - .env
         ports:
