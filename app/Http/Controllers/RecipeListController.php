@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RecipeResource;
 use App\Http\UseCases\IGetRecipesList;
-use App\Models\Repositories\ListRepository;
 use Illuminate\Http\Request;
 
 class RecipeListController extends Controller
@@ -14,6 +14,6 @@ class RecipeListController extends Controller
     public function index(Request $request, IGetRecipesList $service)
     {
         $data = $service->listAll($request->all());
-        return response()->json($data, 200);
+        return response()->json(['data' => RecipeResource::collection($data)], 200);
     }
 }

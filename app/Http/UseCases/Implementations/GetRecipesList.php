@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\UseCases;
+namespace App\Http\UseCases\Implementations;
 
+use App\Http\UseCases\IGetRecipesList;
 use App\Models\Repositories\IFoodRecipeRepository;
 
 class GetRecipesList implements IGetRecipesList

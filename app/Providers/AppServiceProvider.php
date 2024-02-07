@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
+use App\Adapters\Implementations\StockRequestImpl;
 use App\Adapters\IStockRequestAdapter;
-use App\Http\UseCases\GetRecipesList;
+use App\Http\UseCases\Implementations\GetRecipesList;
 use App\Http\UseCases\IGetRecipesList;
 use App\Http\UseCases\IOrderStore;
 use App\Http\UseCases\ISendStockIngredientsRequest;
-use App\Http\UseCases\OrderStoreImpl;
-use App\Http\UseCases\SendStockIngredientsRequestTest;
-use App\Http\UseCases\StockRequestImpl;
+use App\Http\UseCases\Implementations\OrderStoreImpl;
+use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
 use App\Models\Repositories\IFoodRecipeRepository;
 use App\Models\Repositories\Implementations\FoodRecipeRepository;
 use Illuminate\Support\Facades\App;

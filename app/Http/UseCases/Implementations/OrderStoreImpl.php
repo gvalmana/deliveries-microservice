@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\UseCases;
+namespace App\Http\UseCases\Implementations;
 
+use App\Http\UseCases\IOrderStore;
 use App\Models\Order;
 
 class OrderStoreImpl implements IOrderStore

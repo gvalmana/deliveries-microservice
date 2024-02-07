@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\UseCases;
+namespace App\Http\UseCases\Implementations;
 
+use App\Http\UseCases\ISendStockIngredientsRequest;
 use Illuminate\Support\Facades\Log;
 
 final class SendStockIngredientsRequestTest implements ISendStockIngredientsRequest

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\UseCases;
+namespace App\Adapters\Implementations;
 
 use App\Adapters\BaseAdapter;
 use App\Adapters\IStockRequestAdapter;

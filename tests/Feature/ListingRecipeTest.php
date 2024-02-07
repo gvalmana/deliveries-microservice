@@ -15,9 +15,29 @@ class ListingRecipeTest extends TestCase
         parent::setUp();
         $this->seed(DatabaseSeeder::class);
     }
-    public function test_example_listing_recipe_can_be_retrived(): void
+    public function test_listing_recipe_can_be_retrived(): void
     {
         $response = $this->getJson(route('recipes.index'));
         $response->assertSuccessful();
+    }
+
+    public function test_listing_recipe_json_structure(): void
+    {
+        $response = $this->getJson(route('recipes.index'));
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'description',
+                    'ingredients'=>[
+                        '*' => [
+                            'name',
+                            'quantity'
+                        ]
+                    ],
+                ],
+            ],
+        ]);
     }
 }
