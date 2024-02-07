@@ -12,4 +12,10 @@ class OrderRepository extends ListRepository implements IOrderRepository
     {
         parent::__construct(Order::class);
     }
+
+    public function getCookingOrders(array $params)
+    {
+        $params['filter'][] = ['status','=',Order::COOKING_STATUS];
+        return $this->listAll($params);
+    }
 }

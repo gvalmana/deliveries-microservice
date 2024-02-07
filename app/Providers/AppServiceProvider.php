@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Adapters\Implementations\StockRequestImpl;
 use App\Adapters\IStockRequestAdapter;
+use App\Http\UseCases\IGetCookingOrders;
 use App\Http\UseCases\IGetOrderHistory;
 use App\Http\UseCases\Implementations\GetRecipesList;
 use App\Http\UseCases\IGetRecipesList;
+use App\Http\UseCases\Implementations\GetCookingOrders;
 use App\Http\UseCases\Implementations\GetOrderHistory;
 use App\Http\UseCases\IOrderStore;
 use App\Http\UseCases\ISendStockIngredientsRequest;
@@ -36,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         App::singleton(IStockRequestAdapter::class, StockRequestImpl::class);
         App::singleton(IGetRecipesList::class, GetRecipesList::class);
         App::singleton(IGetOrderHistory::class, GetOrderHistory::class);
+        App::singleton(IGetCookingOrders::class, GetCookingOrders::class);
     }
 
     /**

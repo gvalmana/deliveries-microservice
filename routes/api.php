@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderListController;
 use App\Http\Controllers\OrderStoreController;
 use App\Http\Controllers\RecipeListController;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'orders'], function () {
     Route::post('store', [OrderStoreController::class, 'store'])->name('orders.store');
-    Route::get('/history', [OrderStoreController::class, 'index'])->name('history.orders.index');
+    Route::get('/history', [OrderListController::class, 'getOrdersHistory'])->name('history.orders.index');
+    Route::get('/cooking', [OrderListController::class, 'getCookingOrders'])->name('orders.get_cooking_orders');
 });
 
 Route::group(['prefix' => 'recipes'], function () {

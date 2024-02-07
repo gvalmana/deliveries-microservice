@@ -1,20 +1,21 @@
 <?php
 namespace App\Http\UseCases\Implementations;
 
-use App\Http\UseCases\IGetOrderHistory;
+use App\Http\UseCases\IGetCookingOrders;
+use App\Models\Order;
 use App\Models\Repositories\IOrderRepository;
+use App\Traits\ParamsProcessTrait;
 
-class GetOrderHistory implements IGetOrderHistory
+class GetCookingOrders implements IGetCookingOrders
 {
     private IOrderRepository $repository;
-
     public function __construct(IOrderRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function getOrderHistory(array $params)
+    public function getCookingOrders(array $params)
     {
-        return $this->repository->listAll($params);
+        return $this->repository->getCookingOrders($params);
     }
 }
