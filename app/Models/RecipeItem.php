@@ -14,6 +14,9 @@ class RecipeItem extends Model
         'ingredient_id',
         'quantity'
     ];
+
+    public const RELATIONS = ['recipe','ingredient'];
+
     public function recipe()
     {
         return $this->belongsTo(FoodRecipe::class);

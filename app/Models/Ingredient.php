@@ -27,6 +27,8 @@ class Ingredient extends Model
         'name',
     ];
 
+    public const RELATIONS = [];
+
     public static function getNamesConstants() {
         $refl = new ReflectionClass(get_called_class());
         $constants = $refl->getConstants();
