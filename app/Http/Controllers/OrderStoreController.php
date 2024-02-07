@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\UseCases\IGetOrderHistory;
 use App\Http\UseCases\IOrderStore;
 use App\Jobs\ProcessCreatedOrderJob;
 use Illuminate\Http\Request;
@@ -17,5 +18,12 @@ class OrderStoreController extends Controller
             'status' => $order->status,
             'code' => $order->code,
         ], 200);
+    }
+
+    public function index(Request $request, IGetOrderHistory $service)
+    {
+        $data = $request->all();
+        $orders = $service->getOrderHistory($data);
+        return response()->json($orders, 200);
     }
 }

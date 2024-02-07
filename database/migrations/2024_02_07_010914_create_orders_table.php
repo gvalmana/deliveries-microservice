@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FoodRecipe;
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(FoodRecipe::class,'recipe_id');
             $table->uuid('code')->unique();
-            $table->enum('status', ['pending', 'confirmed', 'processing', 'canceled', 'delivered'])->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'cooking', 'cancelled', 'delivered'])->default(Order::PENDING_STATUS);
             $table->timestamp('delivery_date')->nullable();
             $table->boolean('is_sent')->default(false);
             $table->softDeletes();

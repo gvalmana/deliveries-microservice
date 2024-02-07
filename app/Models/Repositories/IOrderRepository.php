@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Repositories;
-interface IFoodRecipeRepository
+
+interface IOrderRepository
 {
     public function listAll(array $params);
 }

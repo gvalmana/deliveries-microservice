@@ -1,15 +1,15 @@
 <?php
-
 namespace App\Models\Repositories\Implementations;
 
-use App\Models\FoodRecipe;
+use App\Models\Order;
 use App\Models\Repositories\IFoodRecipeRepository;
+use App\Models\Repositories\IOrderRepository;
 use App\Models\Repositories\ListRepository;
 
-class FoodRecipeRepository extends ListRepository implements IFoodRecipeRepository
+class OrderRepository extends ListRepository implements IOrderRepository
 {
     public function __construct()
     {
-        parent::__construct(FoodRecipe::class);
+        parent::__construct(Order::class);
     }
 }

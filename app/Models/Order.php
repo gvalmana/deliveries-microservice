@@ -10,6 +10,12 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const COOKING_STATUS = 'cooking';
+    public const PENDING_STATUS = 'pending';
+    public const CONFIRMED_STATUS = 'CONFIRMED';
+    public const DELIVERED_STATUS = 'delivered';
+    public const CANCELLED_STATUS = 'cancelled';
+
     protected $fillable = [
         'recipe_id',
         'status',

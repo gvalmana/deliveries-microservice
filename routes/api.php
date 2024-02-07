@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'orders'], function () {
     Route::post('store', [OrderStoreController::class, 'store'])->name('orders.store');
+    Route::get('/history', [OrderStoreController::class, 'index'])->name('history.orders.index');
 });
 
 Route::group(['prefix' => 'recipes'], function () {
