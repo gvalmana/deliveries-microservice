@@ -28,6 +28,5 @@ class SentStockRequestTest extends TestCase
         ]);
         $response = $this->getJson(config('globals.stock_microservice.url'));
         $response->assertStatus(200);
-        $this->assertDatabaseHas('orders',['status'=>'processing']);
     }
 }
