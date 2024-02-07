@@ -24,6 +24,7 @@ class Order extends Model
     ];
     protected $casts = [
         'status' => 'string',
+        'code' => 'string',
         'is_sent' => 'boolean',
         'delivery_date' => 'datetime'
     ];
