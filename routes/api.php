@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderListController;
 use App\Http\Controllers\OrderStoreController;
+use App\Http\Controllers\OrderWebhookController;
 use App\Http\Controllers\RecipeListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ Route::group(['prefix' => 'orders'], function () {
 
 Route::group(['prefix' => 'recipes'], function () {
     Route::get('/', [RecipeListController::class, 'index'])->name('recipes.index');
+});
+
+Route::group(['prefix' => 'webhooks'], function () {
+    Route::post('orders', [OrderWebhookController::class, 'webhook'])->name('webhooks.orders');
 });
 
 Route::get('/healtcheck', function() {

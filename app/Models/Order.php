@@ -40,7 +40,9 @@ class Order extends Model
     public static function booted()
     {
         static::creating(function (Order $model) {
-            $model->code = Str::uuid()->toString();
+            if (!$model->code) {
+                $model->code = Str::uuid()->toString();
+            }
         });
     }
 }

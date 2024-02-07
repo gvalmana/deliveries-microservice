@@ -15,7 +15,9 @@ use App\Http\UseCases\ISendStockIngredientsRequest;
 use App\Http\UseCases\Implementations\OrderStore;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequest;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
+use App\Http\UseCases\Implementations\UpdateOrderStatus;
 use App\Http\UseCases\IOrderHistory;
+use App\Http\UseCases\IOrderWebhookStatusUpdate;
 use App\Models\Repositories\IFoodRecipeRepository;
 use App\Models\Repositories\Implementations\FoodRecipeRepository;
 use App\Models\Repositories\Implementations\OrderRepository;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         App::singleton(IGetRecipesList::class, GetRecipesList::class);
         App::singleton(IGetOrderHistory::class, GetOrderHistory::class);
         App::singleton(IGetCookingOrders::class, GetCookingOrders::class);
+        App::singleton(IOrderWebhookStatusUpdate::class, UpdateOrderStatus::class);
     }
 
     /**
