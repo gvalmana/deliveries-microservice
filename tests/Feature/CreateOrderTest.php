@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Order;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -28,7 +29,11 @@ class CreateOrderTest extends TestCase
             'status',
             'code'
         ]);
+        $code_uuid = $response->json('code');
         $this->assertDatabaseCount('orders', 1);
-        $this->assertDatabaseHas('orders', ['status' => 'pending']);
+        $this->assertDatabaseHas('orders', ['status' => 'pending','is_sent' => 1,'code'=> $code_uuid]);
+        $order = Order::first();
+        $this->assertEquals($order->code, $code_uuid);
+        $this->assertTrue($order->is_sent);
     }
 }

@@ -13,8 +13,15 @@ class Order extends Model
     protected $fillable = [
         'recipe_id',
         'status',
+        'is_sent',
+        'delivery_date'
     ];
-    public function food()
+    protected $casts = [
+        'status' => 'string',
+        'is_sent' => 'boolean',
+        'delivery_date' => 'datetime'
+    ];
+    public function foodRecipe()
     {
         return $this->belongsTo(FoodRecipe::class, 'recipe_id', 'id');
     }

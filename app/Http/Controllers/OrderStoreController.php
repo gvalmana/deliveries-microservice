@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\UseCases\IOrderStore;
+use App\Jobs\ProcessCreatedOrderJob;
 use Illuminate\Http\Request;
 
 class OrderStoreController extends Controller
@@ -11,6 +12,7 @@ class OrderStoreController extends Controller
     {
         $data = $request->all();
         $order = $service->createOrder($data);
+        ProcessCreatedOrderJob::dispatchAfterResponse($order);
         return response()->json([
             'status' => $order->status,
             'code' => $order->code,
