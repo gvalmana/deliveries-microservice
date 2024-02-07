@@ -48,4 +48,34 @@ class HistoryOrderTest extends TestCase
         ]);
         $response->assertJsonCount(10, 'data');
     }
+
+    public function test_history_can_be_paginated(): void
+    {
+        $params = [
+            'pagination' => [
+                'page'=>2,
+                'pageSize'=>5
+            ]
+        ];
+        $this->seed(OrderSeeder::class);
+        $response = $this->getJson(route('history.orders.index').'?'.http_build_query($params));
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'links'=>[
+                'total',
+                'count',
+                'pagination',
+                'page',
+                'lastPage',
+                'hasMorePages',
+                'nextPageUrl',
+                'previousPageUrl',
+                '_links'
+            ],
+        ]);
+        $response->assertJsonCount(5, 'data');
+        $response->assertJsonFragment(['page' => 2]);
+        $response->assertJsonFragment(['total' => 10]);
+        $response->assertJsonFragment(['pagination' => 5]);
+    }
 }
