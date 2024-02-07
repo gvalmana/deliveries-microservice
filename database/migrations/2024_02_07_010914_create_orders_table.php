@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(FoodRecipe::class,'recipe_id');
             $table->uuid('code')->unique();
-            $table->enum('status', ['pending', 'confirmed', 'cooking', 'cancelled', 'delivered'])->default(Order::PENDING_STATUS);
+            $table->enum('status', ['pending', 'cooking', 'cancelled', 'completed'])->default(Order::PENDING_STATUS);
             $table->timestamp('delivery_date')->nullable();
             $table->boolean('is_sent')->default(false);
             $table->softDeletes();

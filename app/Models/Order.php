@@ -10,11 +10,10 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public const COOKING_STATUS = 'cooking';
-    public const PENDING_STATUS = 'pending';
-    public const CONFIRMED_STATUS = 'CONFIRMED';
-    public const DELIVERED_STATUS = 'delivered';
-    public const CANCELLED_STATUS = 'cancelled';
+    public const PENDING_STATUS = 'pending'; // Waiting for ingredients
+    public const COOKING_STATUS = 'cooking'; // With all ingredients ready
+    public const COMPLETED_STATUS = 'completed'; //Order completed and delivered
+    public const CANCELLED_STATUS = 'cancelled'; //Cancelled by any reason
 
     protected $fillable = [
         'recipe_id',
