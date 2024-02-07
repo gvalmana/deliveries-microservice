@@ -5,4 +5,5 @@ interface IOrderRepository
 {
     public function listAll(array $params);
     public function getCookingOrders(array $params);
+    public function setCookingStatus(string $code);
 }

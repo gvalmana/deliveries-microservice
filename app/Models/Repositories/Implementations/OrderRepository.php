@@ -18,4 +18,9 @@ class OrderRepository extends ListRepository implements IOrderRepository
         $params['filter'][] = ['status','=',Order::COOKING_STATUS];
         return $this->listAll($params);
     }
+
+    public function setCookingStatus(string $code)
+    {
+        $this->modelClass->where('code', $code)->update(['status' => Order::COOKING_STATUS]);
+    }
 }

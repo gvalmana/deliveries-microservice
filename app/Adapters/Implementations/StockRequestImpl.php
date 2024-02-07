@@ -14,7 +14,7 @@ final class StockRequestImpl extends BaseAdapter implements IStockRequestAdapter
 
     public function sendStockIngredients(array $data)
     {
-        $response = $this->sendPostPublicRequest($this->url, $data);
+        $response = $this->sendPostPublicRequest($this->url.'/get-stock-ingredients', $data);
         return $response;
     }
 }

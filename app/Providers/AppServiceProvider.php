@@ -13,6 +13,7 @@ use App\Http\UseCases\Implementations\GetOrderHistory;
 use App\Http\UseCases\IOrderStore;
 use App\Http\UseCases\ISendStockIngredientsRequest;
 use App\Http\UseCases\Implementations\OrderStore;
+use App\Http\UseCases\Implementations\SendStockIngredientsRequest;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
 use App\Http\UseCases\IOrderHistory;
 use App\Models\Repositories\IFoodRecipeRepository;
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        App::bind(ISendStockIngredientsRequest::class, SendStockIngredientsRequestTest::class);
+        App::bind(ISendStockIngredientsRequest::class, SendStockIngredientsRequest::class);
         //Repositories
         App::bind(IFoodRecipeRepository::class, FoodRecipeRepository::class);
         App::bind(IOrderRepository::class, OrderRepository::class);

@@ -1,6 +1,6 @@
 <?php
 return [
     'stock_microservice' =>[
-        'url' => env('STOCK_INGREDIENTS_URL', 'http://localhost:8081'),
+        'url' => env('STOCK_INGREDIENTS_URL', 'http://localhost:8081/api'),
     ]
 ];
