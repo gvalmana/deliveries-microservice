@@ -44,7 +44,7 @@ class AddItemsRecipeSeeder extends Seeder
         ];
         foreach ($data as $item) {
             foreach ($item['ingredients_id'] as $value) {
-                RecipeItem::updateOrCreate(['recipe_id' => $item['recipe_id'], 'ingredient_id' => $value]);
+                RecipeItem::updateOrCreate(['recipe_id' => $item['recipe_id'], 'ingredient_id' => $value, 'quantity' => random_int(1,3)]);
             }
         }
     }
