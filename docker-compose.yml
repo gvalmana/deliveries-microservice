@@ -9,6 +9,8 @@ services:
             - ./:/var/www/html
         networks:
             - alegra-test-network
+        depends_on:
+            - database
     database:
         image: mysql
         container_name: deliveries-microservice-db

@@ -1,8 +1,14 @@
-FROM php:8.2-cli
-RUN docker-php-source extract \
-	# do important things \
-	&& docker-php-source delete
+FROM php:8.1-fpm
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    unzip
+#Installing composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 WORKDIR /var/www/html
+COPY .env.example .env
 COPY php.ini /etc/php/8.1/fpm/php.ini
 COPY site.conf /etc/nginx/sites-available/default
 COPY composer.json composer.json
@@ -15,13 +21,9 @@ RUN composer install \
     --prefer-dist \
     --quiet
 COPY . .
-COPY .env.example .env
 RUN composer dump-autoload
-RUN php artisan cache:clear
-RUN php artisan config:clear
-RUN php artisan config:cache
 #RUN php artisan migrate
 RUN php artisan key:generate
-RUN chmod 7777 storage/ -R -v
-RUN chown www-data:www-data -R storage
+RUN chmod o+w ./storage/ -R
+RUN chown www-data:www-data -R ./storage
 RUN chmod o+w /var/www/html/public
