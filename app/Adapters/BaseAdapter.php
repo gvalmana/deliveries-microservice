@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Log;
 abstract class BaseAdapter
 {
     protected $headers;
+    protected $url;
     public function __construct()
     {
         $this->headers = [

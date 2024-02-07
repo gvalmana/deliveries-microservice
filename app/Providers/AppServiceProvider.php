@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Adapters\IStockRequestAdapter;
 use App\Http\UseCases\IOrderStore;
 use App\Http\UseCases\ISendStockIngredientsRequest;
 use App\Http\UseCases\OrderStoreImpl;
 use App\Http\UseCases\SendStockIngredientsRequestTest;
+use App\Http\UseCases\StockRequestImpl;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         App::singleton(IOrderStore::class, OrderStoreImpl::class);
         App::bind(ISendStockIngredientsRequest::class, SendStockIngredientsRequestTest::class);
+        App::singleton(IStockRequestAdapter::class, StockRequestImpl::class);
     }
 
     /**
