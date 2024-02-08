@@ -1,45 +1,51 @@
 version: "3.8"
 services:
-    app:
-        container_name: deliveries-microservice
-        build: .
-        ports:
-            - 8080:80
+    php_delivery:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: delivery_php
+        # restart: always
+        tty: true
+        working_dir: /var/www/html/
         volumes:
-            - ./:/var/www/html
+            - ./:/var/www/html/
+            - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         networks:
-            - alegra-test-network
+            - delivery-micro-network
+
+    nginx_delivery:
         depends_on:
-            - database
-    database:
-        image: mysql
-        container_name: deliveries-microservice-db
+            - php_delivery
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        container_name: appname_nginx
+        # restart: always
+        tty: true
+        ports:
+            - "80:80"
+        networks:
+            - delivery-micro-network
+
+    mysql_delivery:
+        image: mariadb:10.1.48
+        container_name: mysql_delivery
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_DATABASE}
             MYSQL_PASSWORD: ${DB_PASSWORD}
-        env_file:
-            - .env
         ports:
-            - 3306:3306
+        - 3306:3306
         volumes:
-            - deliveries-microservice-db:/var/lib/mysql
+        - ./mysql_delivery:/var/lib/mysql
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
-            - alegra-test-network
-    redis:
-        image: 'redis'
-        container_name: deliveries-microservice-redis
-        ports:
-            - 6379:6379
-        volumes:
-            - deliveries-microservice-redis:/data
-        networks:
-            - alegra-test-network
+        - delivery-micro-network
 
 volumes:
-    deliveries-microservice-db:
-    deliveries-microservice-redis:
+    mysql_delivery:
 
 networks:
-    alegra-test-network:
+    delivery-micro-network:
+        driver: bridge
