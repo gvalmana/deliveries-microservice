@@ -21,13 +21,14 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    dnsutils
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions for php
 RUN docker-php-ext-install mbstring zip exif pcntl
-RUN docker-php-ext-install pdo pgsql pdo_pgsql
+RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-install gd
 
 # Install composer (php package manager)
@@ -40,6 +41,18 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
+
+RUN composer install
+RUN composer fund
+RUN composer dump-autoload
+COPY .env.example .env
+RUN php artisan key:generate
+RUN php artisan cache:clear
+RUN php artisan config:clear
+RUN php artisan view:clear
+RUN php artisan route:cache
+RUN php artisan config:cache
+#RUN php artisan migrate
 
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000

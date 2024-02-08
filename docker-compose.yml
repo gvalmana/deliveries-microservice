@@ -20,7 +20,7 @@ services:
         build:
             context: ./nginx
             dockerfile: Dockerfile
-        container_name: appname_nginx
+        container_name: nginx_delivery
         # restart: always
         tty: true
         ports:
@@ -29,16 +29,17 @@ services:
             - delivery-micro-network
 
     mysql_delivery:
-        image: mariadb:10.1.48
+        image: mariadb
         container_name: mysql_delivery
         environment:
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_DATABASE}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_USER: ${DB_USERNAME}
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
         ports:
         - 3306:3306
         volumes:
-        - ./mysql_delivery:/var/lib/mysql
+        - mysql_delivery:/var/lib/mysql
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
         - delivery-micro-network
