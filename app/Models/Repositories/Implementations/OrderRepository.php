@@ -33,4 +33,12 @@ class OrderRepository extends ListRepository implements IOrderRepository
     {
         $this->modelClass->where('code', $code)->update(['status' => $status]);
     }
+
+    public function insertOrder(int $recipeId)
+    {
+        $order = $this->modelClass::create([
+            'recipe_id' => $recipeId
+        ]);
+        return $order;
+    }
 }
