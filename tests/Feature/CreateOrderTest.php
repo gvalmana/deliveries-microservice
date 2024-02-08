@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Helpers\StockOrderMessage;
 use App\Http\UseCases\Implementations\SendStockIngredientsHttpRequest;
+use App\Http\UseCases\Implementations\SendStockIngredientsKafkaProducer;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequest;
 use Tests\TestCase;
 use App\Models\Order;
@@ -12,7 +14,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\UseCases\ISendStockIngredientsRequest;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
-
+use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Message\Message;
 class CreateOrderTest extends TestCase
 {
     use RefreshDatabase;
@@ -94,5 +97,22 @@ class CreateOrderTest extends TestCase
         $order = Order::first();
         $this->assertEquals($order->code, $code_uuid);
         $this->assertTrue($order->is_sent);
+    }
+
+    public function test_creating_order_with_kafka_message()
+    {
+        Kafka::fake();
+        $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsKafkaProducer::class);
+        $response = $this->postJson(route('orders.store'), []);
+        $response->assertSuccessful();
+        $order = Order::first();
+        Kafka::assertPublishedOn(StockOrderMessage::TOPIC, null, function(Message $message) use($order){
+            $key_correct = $message->getKey() === $order->code;
+            $order_id_correct = $message->getBody()['data']['order_id'] === $order->code;
+            $array_ingredients = $message->getBody()['data']['ingredients'];
+            $correct_keys = array_key_exists('name', $array_ingredients) && array_key_exists('quantity', $array_ingredients);
+            $correct_types = is_string($array_ingredients['name']) && is_numeric($array_ingredients['quantity']);
+            return $key_correct && $order_id_correct && $correct_keys && $correct_types;
+        });
     }
 }

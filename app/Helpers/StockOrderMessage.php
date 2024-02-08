@@ -9,11 +9,14 @@ class StockOrderMessage extends KafkaMessageStructure
     {
         parent::__construct($data);
         $this->setTopic(self::TOPIC);
+        $this->setKey($data['order_id']);
     }
 
-    public function setTopic(string $topic)
+    public function getBody(): array
     {
-        $this->topic = $topic;
+        return [
+            'date'=>$this->date,
+            'data'=>$this->data
+        ];
     }
-
 }

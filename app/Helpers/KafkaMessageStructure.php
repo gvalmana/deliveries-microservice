@@ -16,8 +16,6 @@ abstract class KafkaMessageStructure
         $this->date = date('Y-m-d H:i:s');
     }
 
-    abstract function setTopic(string $topic);
-
     private function generateData()
     {
         return [
@@ -25,5 +23,37 @@ abstract class KafkaMessageStructure
             'date' => $this->date,
             'data' => $this->data
         ];
+    }
+
+    public function getTopic(): string {
+        return $this->topic;
+    }
+
+    public function setTopic(string $topic): void {
+        $this->topic = $topic;
+    }
+
+    public function getKey(): string {
+        return $this->key;
+    }
+
+    public function setKey(string $key): void {
+        $this->key = $key;
+    }
+
+    public function getData(): array {
+        return $this->data;
+    }
+
+    public function setData(array $data): void {
+        $this->data = $data;
+    }
+
+    public function getDate(): string {
+        return $this->date;
+    }
+
+    public function setDate(string $date): void {
+        $this->date = $date;
     }
 }

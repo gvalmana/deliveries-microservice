@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    dnsutils
+    dnsutils \
+    librdkafka-dev
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -30,6 +31,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install mbstring zip exif pcntl
 RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-install gd
+RUN pecl install rdkafka \
+    && docker-php-ext-enable rdkafka
 
 # Install composer (php package manager)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
