@@ -2,12 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Http\UseCases\Implementations\SendStockIngredientsHttpRequest;
+use App\Http\UseCases\Implementations\SendStockIngredientsRequest;
+use Tests\TestCase;
 use App\Models\Order;
 use Database\Seeders\DatabaseSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Http\UseCases\ISendStockIngredientsRequest;
+use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
 
 class CreateOrderTest extends TestCase
 {
@@ -20,12 +24,7 @@ class CreateOrderTest extends TestCase
 
     public function test_a_order_can_be_created()
     {
-        $data_response = [
-            'enough_stock' => false
-        ];
-        Http::fake([
-            'http://localhost:8001/api/get-stock-ingredients' => Http::response($data_response, 200)
-        ]);
+        $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsRequestTest::class);
         $data = [
 
         ];
@@ -37,7 +36,7 @@ class CreateOrderTest extends TestCase
         ]);
         $code_uuid = $response->json('code');
         $this->assertDatabaseCount('orders', 1);
-        $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid]);
+        $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::PENDING_STATUS]);
         $order = Order::first();
         $this->assertEquals($order->code, $code_uuid);
         $this->assertTrue($order->is_sent);
@@ -45,8 +44,9 @@ class CreateOrderTest extends TestCase
 
     public function test_a_order_is_placed_on_pending_orders()
     {
+        $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsHttpRequest::class);
         $data_response = [
-            'enough_stock' => false
+            'success' => false
         ];
         $data_request=[];
         Http::fake([
@@ -69,10 +69,11 @@ class CreateOrderTest extends TestCase
         $this->assertTrue($order->is_sent);
     }
 
-    public function test_a_order_is_placed_on_cooking_orders()
+    public function test_a_order_is_placed_as_pending_orders()
     {
+        $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsHttpRequest::class);
         $data_response = [
-            'enough_stock' => true
+            'success' => true
         ];
         $data_request=[];
         Http::fake([
@@ -89,7 +90,7 @@ class CreateOrderTest extends TestCase
         ]);
         $code_uuid = $response->json('code');
         $this->assertDatabaseCount('orders', 1);
-        $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::COOKING_STATUS]);
+        $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::REQUESTED_STATUS]);
         $order = Order::first();
         $this->assertEquals($order->code, $code_uuid);
         $this->assertTrue($order->is_sent);

@@ -14,6 +14,7 @@ class Order extends Model
     public const COOKING_STATUS = 'cooking'; // With all ingredients ready
     public const COMPLETED_STATUS = 'completed'; //Order completed and delivered
     public const CANCELLED_STATUS = 'cancelled'; //Cancelled by any reason
+    public const REQUESTED_STATUS = 'requested'; //Requested to the stock market
 
     protected $fillable = [
         'recipe_id',

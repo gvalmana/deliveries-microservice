@@ -41,17 +41,19 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
+RUN chmod -R 777 storage/ -R
 
 RUN composer install
 RUN composer fund
 RUN composer dump-autoload
 COPY .env.example .env
-RUN php artisan key:generate
+
 RUN php artisan cache:clear
-RUN php artisan config:clear
 RUN php artisan view:clear
 RUN php artisan route:cache
-RUN php artisan config:cache
+RUN php artisan config:clear --env=local
+RUN php artisan config:cache --env=local
+RUN php artisan key:generate
 #RUN php artisan migrate
 
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)

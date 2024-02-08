@@ -62,5 +62,6 @@ class OrderModelTest extends TestCase
         $this->assertEquals(Order::COOKING_STATUS, 'cooking');
         $this->assertEquals(Order::COMPLETED_STATUS, 'completed');
         $this->assertEquals(Order::CANCELLED_STATUS, 'cancelled');
+        $this->assertEquals(Order::REQUESTED_STATUS, 'requested');
     }
 }

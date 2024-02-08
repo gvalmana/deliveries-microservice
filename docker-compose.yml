@@ -24,20 +24,22 @@ services:
         # restart: always
         tty: true
         ports:
-            - "80:80"
+            - "${APP_PORT}:80"
         networks:
             - delivery-micro-network
 
     mysql_delivery:
         image: mariadb
-        container_name: mysql_delivery
+        container_name: db_delivery
+        env_file:
+            - .env
         environment:
             MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_USER: ${DB_USERNAME}
-            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
             MARIADB_PASSWORD: ${DB_PASSWORD}
         ports:
-        - 3306:3306
+        - "${DB_PORT}:3306"
         volumes:
         - mysql_delivery:/var/lib/mysql
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -49,4 +51,3 @@ volumes:
 
 networks:
     delivery-micro-network:
-        driver: bridge

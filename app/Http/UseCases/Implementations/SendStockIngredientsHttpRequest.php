@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Models\Repositories\IOrderRepository;
 use Illuminate\Support\Facades\Log;
 
-final class SendStockIngredientsRequest implements ISendStockIngredientsRequest
+final class SendStockIngredientsHttpRequest implements ISendStockIngredientsRequest
 {
     private IStockRequestAdapter $conector;
     private IOrderRepository $orderRepository;
@@ -19,7 +19,7 @@ final class SendStockIngredientsRequest implements ISendStockIngredientsRequest
     public function sendStockIngredients(array $data)
     {
         $response = $this->conector->sendStockIngredients($data);
-        if ($response->enough_stock) {
+        if ($response->success) {
             $this->orderRepository->setCookingStatus($data['order_id']);
         }
     }
