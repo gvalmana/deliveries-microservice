@@ -20,9 +20,6 @@ jobs:
       - name: Run Docker Container
         run: docker run -d -p 8000:8000 micro_service_deliveries_php
 
-      - name: Install Composer Dependencies
-        run: docker exec -it micro_service_deliveries_php composer install
-
       - name: Run Laravel Migrations
         run: docker exec -it micro_service_deliveries_php php artisan migrate
 
