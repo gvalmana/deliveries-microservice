@@ -34,7 +34,7 @@ Route::group(['prefix' => 'recipes','middleware' => ['log.http.requests']], func
 });
 
 Route::group(['prefix' => 'webhooks','middleware' => ['log.http.requests']], function () {
-    Route::post('orders', OrderWebhookController::class)->name('webhooks.orders')->middleware('api:check.authorization.header');
+    Route::post('orders', OrderWebhookController::class)->name('webhooks.orders')->middleware('check.authorization.header');
 });
 
 Route::get('/healtcheck', function() {
