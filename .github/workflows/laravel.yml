@@ -19,7 +19,7 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install PHP Dependencies
-      run: apt install php8.1-rdkafka
+      run: sudo apt install php8.1-rdkafka
     - name: Install Dependencies
       run: composer install
     - name: Generate key
