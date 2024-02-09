@@ -23,18 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'orders'], function () {
+Route::group(['prefix' => 'orders','middleware' => ['log.http.requests']], function () {
     Route::post('store', OrderStoreController::class)->name('orders.store');
     Route::get('/history', OrderHistoryController::class)->name('history.orders.index');
     Route::get('/cooking', OrderCookingController::class)->name('orders.get_cooking_orders');
 });
 
-Route::group(['prefix' => 'recipes'], function () {
+Route::group(['prefix' => 'recipes','middleware' => ['log.http.requests']], function () {
     Route::get('/', RecipeListController::class)->name('recipes.index');
 });
 
-Route::group(['prefix' => 'webhooks'], function () {
-    Route::post('orders', OrderWebhookController::class)->name('webhooks.orders');
+Route::group(['prefix' => 'webhooks','middleware' => ['log.http.requests']], function () {
+    Route::post('orders', OrderWebhookController::class)->name('webhooks.orders')->middleware('api:check.authorization.header');
 });
 
 Route::get('/healtcheck', function() {
@@ -42,4 +42,4 @@ Route::get('/healtcheck', function() {
         'status' => true,
         'message' => 'OK, I am healthy!'
     ]);
-})->name('healtcheck');
+})->name('healtcheck')->middleware('log.http.requests');

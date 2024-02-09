@@ -28,7 +28,7 @@ class OrdersWebHookTest extends TestCase
                 'order_code' => $code
             ]
         ];
-        $response = $this->postJson(route('webhooks.orders'), $data);
+        $response = $this->postJson(route('webhooks.orders'), $data,['Authorization' => 'Bearer '.config('globals.security_key')]);
         $response->assertStatus(200);
         $this->assertDatabaseHas('orders', [
             'code' => $code,
@@ -40,7 +40,7 @@ class OrdersWebHookTest extends TestCase
     {
         $data = [
         ];
-        $response = $this->postJson(route('webhooks.orders'), $data);
+        $response = $this->postJson(route('webhooks.orders'), $data,['Authorization' => 'Bearer '.config('globals.security_key')]);
         $response->assertStatus(422);
     }
 
@@ -52,7 +52,7 @@ class OrdersWebHookTest extends TestCase
                 'order_code' => "randon_code"
             ]
         ];
-        $response = $this->postJson(route('webhooks.orders'), $data);
+        $response = $this->postJson(route('webhooks.orders'), $data,['Authorization' => 'Bearer '.config('globals.security_key')]);
         $response->assertStatus(422);
     }
 }
