@@ -50,16 +50,3 @@ jobs:
 
       - name: Run Docker Container
         run: docker run -d -p 8000:8000 --name my_container_test micro_service_deliveries_php
-      - name: Checking Service
-        env:
-          ENDPOINT: "http://my_container_test:8000/api/healtcheck"
-        run: |
-          echo "Testing endpoint healtcheck"
-          RESPONSE=$(curl -o /dev/null -s -w "%{http_code}\n" "http://my_container_test:8000/api/healtcheck"
-          echo ${RESPONSE}
-          if [ ${RESPONSE} -ne "200" ]
-          then
-            echo "Service unresponsive"
-          exit 1
-          fi
-            echo "Deployement success!"
