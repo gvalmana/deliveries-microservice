@@ -17,8 +17,8 @@ class RecipeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'ingredients' => RecipeIngredientResource::collection($this->ingredients),
-            'description' => $this->instructions
+            'description' => $this->description,
+            'ingredients' => RecipeIngredientResource::collection($this->ingredients)
         ];
     }
 }

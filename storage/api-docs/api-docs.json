@@ -10,6 +10,100 @@
         }
     ],
     "paths": {
+        "/api/orders/cooking": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Ordenes en preparación",
+                "operationId": "1fd96a65164933ea9aee4752e69fa121",
+                "responses": {
+                    "200": {
+                        "description": "Listado de ordenes que están en preparación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/history": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Historial de pedidos",
+                "operationId": "3fb0ece4fc5fc158a663a6c04832aa99",
+                "responses": {
+                    "200": {
+                        "description": "Listado de pedidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/orders/store": {
             "post": {
                 "tags": [
@@ -19,7 +113,7 @@
                 "operationId": "20487e63cc93d699a5d933f078688a3f",
                 "responses": {
                     "200": {
-                        "description": "Orden enviada con exito realizada con éxito.",
+                        "description": "Realizar un pedido de una comida",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -35,6 +129,125 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Order created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/webhooks/orders": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Actualiza una orden",
+                "operationId": "6a68d11e2502fc73a648e9e6df1d646e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "event",
+                                    "data"
+                                ],
+                                "properties": {
+                                    "event": {
+                                        "type": "string",
+                                        "example": "update_cooking_status"
+                                    },
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "order_code"
+                                            ],
+                                            "properties": {
+                                                "order_code": {
+                                                    "type": "string",
+                                                    "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Orden actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Order created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/recipes": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Listado de recetas",
+                "operationId": "5aeda9c5bec448b7b2aba09fab74e4ff",
+                "responses": {
+                    "200": {
+                        "description": "Listado de recetas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "success"
                                         },
                                         "data": {
                                             "properties": {

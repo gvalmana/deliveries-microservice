@@ -23,7 +23,7 @@ final class OrderStoreController extends Controller
      *     tags={"Delivery"},
      *     @OA\Response(
      *         response=200,
-     *         description="Orden enviada con exito realizada con éxito.",
+     *         description="Realizar un pedido de una comida",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example="true"),
      *             @OA\Property(property="type", type="string", example="success"),

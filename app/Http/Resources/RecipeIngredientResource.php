@@ -15,7 +15,7 @@ class RecipeIngredientResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->ingredient->name,
+            'name' => $this->product->name,
             'quantity' => $this->quantity
         ];
     }
