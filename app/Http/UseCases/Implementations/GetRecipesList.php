@@ -13,6 +13,11 @@ class GetRecipesList implements IGetRecipesList
         $this->repository = $repository;
     }
 
+    public function __invoke(array $params)
+    {
+        return $this->listAll($params);
+    }
+
     public function listAll(array $params)
     {
         return $this->repository->listAll($params);

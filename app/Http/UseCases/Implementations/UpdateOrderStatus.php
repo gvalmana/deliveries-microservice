@@ -6,6 +6,11 @@ use App\Jobs\OrderUpdateWebhookJob;
 
 class UpdateOrderStatus implements IOrderWebhookStatusUpdate
 {
+    public function __invoke(array $data)
+    {
+        return $this->updateOrderStatus($data);
+    }
+
     public function updateOrderStatus(array $data): void
     {
         $event = $data['event'];

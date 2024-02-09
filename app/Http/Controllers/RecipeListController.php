@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class RecipeListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __invoke(Request $request, IGetRecipesList $service)
+    {
+        return $this->index($request, $service);
+    }
+
     public function index(Request $request, IGetRecipesList $service)
     {
         $data = $service->listAll($request->all());

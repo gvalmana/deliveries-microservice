@@ -13,9 +13,14 @@ class OrderStore implements IOrderStore
     {
         $this->orderRepository = $orderRepository;
     }
+
+    public function __invoke(array $data)
+    {
+        return $this->createOrder($data);
+    }
+
     public function createOrder(array $data)
     {
-        // TODO: Implement createOrder() method.
         $max = FoodRecipe::max('id');
         $recipeId = rand(1,$max);
         $order = $this->orderRepository->insertOrder($recipeId);

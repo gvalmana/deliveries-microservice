@@ -13,6 +13,11 @@ class GetOrderHistory implements IGetOrderHistory
         $this->repository = $repository;
     }
 
+    public function __invoke(array $params)
+    {
+        return $this->getOrderHistory($params);
+    }
+
     public function getOrderHistory(array $params)
     {
         return $this->repository->listAll($params);

@@ -9,6 +9,12 @@ use Junges\Kafka\Message\Message;
 final class SendStockIngredientsKafkaProducer implements ISendStockIngredientsRequest
 {
     private $configuration;
+
+    public function __invoke(array $data)
+    {
+        return $this->sendStockIngredients($data);
+    }
+
     public function sendStockIngredients(array $data)
     {
         $this->configuration = new StockOrderMessage($data);

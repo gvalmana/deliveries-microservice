@@ -16,6 +16,12 @@ final class SendStockIngredientsHttpRequest implements ISendStockIngredientsRequ
         $this->conector = $conector;
         $this->orderRepository = $orderRepository;
     }
+
+    public function __invoke(array $data)
+    {
+        return $this->sendStockIngredients($data);
+    }
+
     public function sendStockIngredients(array $data)
     {
         $response = $this->conector->sendStockIngredients($data);

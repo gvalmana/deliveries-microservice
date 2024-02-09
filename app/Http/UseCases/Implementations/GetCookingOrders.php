@@ -14,6 +14,11 @@ class GetCookingOrders implements IGetCookingOrders
         $this->repository = $repository;
     }
 
+    public function __invoke(array $params)
+    {
+        return $this->getCookingOrders($params);
+    }
+
     public function getCookingOrders(array $params)
     {
         return $this->repository->getCookingOrders($params);

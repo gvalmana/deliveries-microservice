@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class OrderStoreController extends Controller
 {
+    public function __invoke(Request $request, IOrderStore $service)
+    {
+        return $this->store($request, $service);
+    }
     public function store(Request $request, IOrderStore $service)
     {
         $data = $request->all();

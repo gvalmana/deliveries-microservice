@@ -23,17 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'orders'], function () {
-    Route::post('store', [OrderStoreController::class, 'store'])->name('orders.store');
+    Route::post('store', OrderStoreController::class)->name('orders.store');
     Route::get('/history', [OrderListController::class, 'getOrdersHistory'])->name('history.orders.index');
     Route::get('/cooking', [OrderListController::class, 'getCookingOrders'])->name('orders.get_cooking_orders');
 });
 
 Route::group(['prefix' => 'recipes'], function () {
-    Route::get('/', [RecipeListController::class, 'index'])->name('recipes.index');
+    Route::get('/', RecipeListController::class)->name('recipes.index');
 });
 
 Route::group(['prefix' => 'webhooks'], function () {
-    Route::post('orders', [OrderWebhookController::class, 'webhook'])->name('webhooks.orders');
+    Route::post('orders', OrderWebhookController::class)->name('webhooks.orders');
 });
 
 Route::get('/healtcheck', function() {
