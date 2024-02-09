@@ -53,7 +53,7 @@ class CreateOrderTest extends TestCase
         ];
         $data_request=[];
         Http::fake([
-            'http://localhost:8001/api/get-stock-ingredients' => Http::response($data_response, 200)
+            'http://localhost:8001/api/orders/get-order' => Http::response($data_response, 200)
         ]);
         $data = [
 
@@ -80,7 +80,7 @@ class CreateOrderTest extends TestCase
         ];
         $data_request=[];
         Http::fake([
-            'http://localhost:8001/api/get-stock-ingredients' => Http::response($data_response, 200)
+            config("globals.stock_microservice.url".'/orders/get-order') => Http::response($data_response, 200)
         ]);
         $data = [
 

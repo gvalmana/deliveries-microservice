@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class ProcessCreatedOrderJob implements ShouldQueue
@@ -28,10 +29,11 @@ class ProcessCreatedOrderJob implements ShouldQueue
 
     public function handle(ISendStockIngredientsRequest $sendStockIngredients): void
     {
-        $ingredients = $this->getOrdersIngredients();
+        Log::debug("Dispatching ProcessCreatedOrderJob");
+        $ingredients[] = $this->getOrdersIngredients();
         $data = [
-            'order_id' => $this->order->code,
-            'ingredients' => $ingredients
+            'order_code' => $this->order->code,
+            'products' => $ingredients
         ];
         $sendStockIngredients->sendStockIngredients($data);
         $this->order->update([
@@ -46,7 +48,7 @@ class ProcessCreatedOrderJob implements ShouldQueue
         $recipe = $this->order->recipe;
         $recipeItems = $recipe->ingredients;
         foreach ($recipeItems as $item) {
-            $ingredients['name'] = $item->ingredient->name;
+            $ingredients['name'] = $item->product->name;
             $ingredients['quantity'] = $item->quantity;
         }
         return $ingredients;

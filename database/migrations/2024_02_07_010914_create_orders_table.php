@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(FoodRecipe::class,'recipe_id');
+            $table->foreignIdFor(FoodRecipe::class,'recipe_id')->constrained('food_recipes');
             $table->uuid('code')->unique();
             $table->enum('status', ['pending', 'cooking', 'cancelled', 'completed','requested'])->default(Order::PENDING_STATUS);
             $table->timestamp('delivery_date')->nullable();

@@ -5,6 +5,7 @@ use App\Http\UseCases\IOrderStore;
 use App\Models\FoodRecipe;
 use App\Models\Order;
 use App\Models\Repositories\IOrderRepository;
+use Illuminate\Support\Facades\Log;
 
 class OrderStore implements IOrderStore
 {

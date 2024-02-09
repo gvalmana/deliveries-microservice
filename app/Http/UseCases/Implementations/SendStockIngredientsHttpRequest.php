@@ -26,7 +26,7 @@ final class SendStockIngredientsHttpRequest implements ISendStockIngredientsRequ
     {
         $response = $this->conector->sendStockIngredients($data);
         if ($response->success) {
-            $this->orderRepository->setRequestedStatus($data['order_id']);
+            $this->orderRepository->setRequestedStatus($data['order_code']);
         }
     }
 }

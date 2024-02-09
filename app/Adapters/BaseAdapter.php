@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 abstract class BaseAdapter
 {
-    protected $headers;
-    protected $url;
+    protected array $headers;
+    protected string $url;
     public function __construct()
     {
         $this->headers = [
@@ -13,7 +13,7 @@ abstract class BaseAdapter
             'Content-Type' => 'application/json'
         ];
     }
-    public function sendGetPublicRequest($url, $params = null)
+    public function sendGetPublicRequest(string $url, array $params = null)
     {
         $response = Http::withHeaders($this->headers)
             ->retry(3, 100)
@@ -27,7 +27,7 @@ abstract class BaseAdapter
         }
     }
 
-    public function sendPostPublicRequest($url, $data = null)
+    public function sendPostPublicRequest(string $url, array $data = null)
     {
         $response = Http::withHeaders($this->headers)
             ->retry(3, 100)
@@ -41,9 +41,10 @@ abstract class BaseAdapter
         }
     }
 
-    public function sendPostSecuredRequest($url, $data = [])
+    public function sendPostSecuredRequest(string $url, array $data = [])
     {
         $response = Http::withHeaders($this->headers)
+            ->withToken(config('globals.security_key'))
             ->retry(3, 100)
             ->timeout(15)
             ->post($url, $data);
@@ -55,7 +56,7 @@ abstract class BaseAdapter
         }
     }
 
-    public function sendGetSecuredRequest($url, $params = [])
+    public function sendGetSecuredRequest(string $url, array $params = [])
     {
         $response = Http::withHeaders($this->headers)
             ->retry(3, 100)

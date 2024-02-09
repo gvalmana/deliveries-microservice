@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Delivery Microservice",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/orders/store": {
+            "post": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Realizar orden de comida a la cocina",
+                "operationId": "20487e63cc93d699a5d933f078688a3f",
+                "responses": {
+                    "200": {
+                        "description": "Orden enviada con exito realizada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Order created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3,8 +3,9 @@ namespace App\Adapters\Implementations;
 
 use App\Adapters\BaseAdapter;
 use App\Adapters\IStockRequestAdapter;
+use Illuminate\Support\Facades\Log;
 
-final class StockRequestImpl extends BaseAdapter implements IStockRequestAdapter
+class StockRequestImpl extends BaseAdapter implements IStockRequestAdapter
 {
     public function __construct()
     {
@@ -14,7 +15,9 @@ final class StockRequestImpl extends BaseAdapter implements IStockRequestAdapter
 
     public function sendStockIngredients(array $data)
     {
-        $response = $this->sendPostPublicRequest($this->url.'/get-stock-ingredients', $data);
+        $path = '/orders/get-order';
+        $this->addHeader('Authorization', 'Bearer '.config('globals.security_key'));
+        $response = $this->sendPostSecuredRequest($this->url.$path, $data);
         return $response;
     }
 }

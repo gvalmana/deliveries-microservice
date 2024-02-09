@@ -15,15 +15,15 @@ class RecipeItem extends Model
         'quantity'
     ];
 
-    public const RELATIONS = ['recipe','ingredient'];
+    public const RELATIONS = ['recipe','product'];
 
     public function recipe()
     {
         return $this->belongsTo(FoodRecipe::class);
     }
 
-    public function ingredient()
+    public function product()
     {
-        return $this->belongsTo(Ingredient::class);
+        return $this->belongsTo(Ingredient::class, 'ingredient_id','id');
     }
 }

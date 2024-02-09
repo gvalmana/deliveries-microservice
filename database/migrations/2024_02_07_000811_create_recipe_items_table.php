@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->unsignedInteger('quantity')->default(1);
-            $table->foreignIdFor(FoodRecipe::class, 'recipe_id');
-            $table->foreignIdFor(Ingredient::class, 'ingredient_id');
+            $table->foreignIdFor(FoodRecipe::class, 'recipe_id')->constrained('food_recipes');
+            $table->foreignIdFor(Ingredient::class, 'ingredient_id')->constrained('ingredients');
         });
     }
 

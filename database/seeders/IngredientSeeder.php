@@ -16,7 +16,7 @@ class IngredientSeeder extends Seeder
         $data= [];
         foreach (Ingredient::getNamesConstants() as $key => $value) {
             $data['name'] = $value;
-            Ingredient::updateOrCreate($data);
+            Ingredient::updateOrCreate($data,$data);
         }
     }
 }

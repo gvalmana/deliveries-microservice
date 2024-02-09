@@ -19,7 +19,7 @@ class RecipeItemModelTest extends TestCase
 
     public function test_recipe_item_model_has_all_consts()
     {
-        $this->assertEquals(RecipeItem::RELATIONS, ['recipe','ingredient']);
+        $this->assertEquals(RecipeItem::RELATIONS, ['recipe','product']);
     }
 
     public function test_recipe_item_model_has_recipe_relation()
@@ -33,6 +33,6 @@ class RecipeItemModelTest extends TestCase
     {
         $this->seed();
         $recipeItem = RecipeItem::first();
-        $this->assertInstanceOf(Ingredient::class, $recipeItem->ingredient);
+        $this->assertInstanceOf(Ingredient::class, $recipeItem->product);
     }
 }
