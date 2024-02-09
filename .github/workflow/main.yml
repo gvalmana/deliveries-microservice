@@ -3,7 +3,7 @@ name: CI/CD Workflow with Laravel and Docker
 on:
   push:
     branches:
-      - develop
+      - dev
       - master
 
 jobs:
