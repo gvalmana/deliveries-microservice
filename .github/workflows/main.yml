@@ -21,6 +21,6 @@ jobs:
         run: docker run -d -p 8000:8000 --name my_container_test micro_service_deliveries_php
 
       - name: Run Laravel Tests
-        run: docker exec my_container_test /bin/sh -c php artisan test | tee /tmp/test_output.log"
+        run: docker exec my_container_test /bin/sh -c php artisan test | tee /tmp/test_output.log
       - name: Print Test Output
         run: cat /tmp/test_output.log
