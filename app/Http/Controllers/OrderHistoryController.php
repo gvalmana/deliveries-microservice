@@ -10,23 +10,20 @@ use App\Traits\HttpResponsable;
 use App\Traits\PaginationTrait;
 use App\Traits\ParamsProcessTrait;
 use Illuminate\Http\Request;
-class OrderListController extends Controller
+final class OrderHistoryController extends Controller
 {
     use ParamsProcessTrait;
     use HttpResponsable;
     use PaginationTrait;
-    public function getOrdersHistory(Request $request, IGetOrderHistory $service)
-    {
-        $params = $this->processParams($request);
-        $orders = $service->getOrderHistory($params);
-        $links = $this->makeMetaData($orders);
-        return $this->makeResponseList(OrderResource::collection($orders), $links);
-    }
 
-    public function getCookingOrders(Request $request, IGetCookingOrders $service)
+    public function __invoke(Request $request, IGetOrderHistory $service)
+    {
+        return $this->getOrdersHistory($request, $service);
+    }
+    private function getOrdersHistory(Request $request, IGetOrderHistory $service)
     {
         $params = $this->processParams($request);
-        $orders = $service->getCookingOrders($params);
+        $orders = $service($params);
         $links = $this->makeMetaData($orders);
         return $this->makeResponseList(OrderResource::collection($orders), $links);
     }

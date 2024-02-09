@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\OrderListController;
+use App\Http\Controllers\OrderCookingController;
+use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\OrderStoreController;
 use App\Http\Controllers\OrderWebhookController;
 use App\Http\Controllers\RecipeListController;
@@ -24,8 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'orders'], function () {
     Route::post('store', OrderStoreController::class)->name('orders.store');
-    Route::get('/history', [OrderListController::class, 'getOrdersHistory'])->name('history.orders.index');
-    Route::get('/cooking', [OrderListController::class, 'getCookingOrders'])->name('orders.get_cooking_orders');
+    Route::get('/history', OrderHistoryController::class)->name('history.orders.index');
+    Route::get('/cooking', OrderCookingController::class)->name('orders.get_cooking_orders');
 });
 
 Route::group(['prefix' => 'recipes'], function () {
