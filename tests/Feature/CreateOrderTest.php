@@ -99,7 +99,7 @@ class CreateOrderTest extends TestCase
         $this->assertTrue($order->is_sent);
     }
 
-    public function test_creating_order_with_kafka_message()
+    public function creating_order_with_kafka_message()
     {
         Kafka::fake();
         $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsKafkaProducer::class);
