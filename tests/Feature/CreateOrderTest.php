@@ -22,7 +22,7 @@ class CreateOrderTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(DatabaseSeeder::class);
+        $this->seed();
     }
 
     public function test_a_order_can_be_created()
@@ -34,10 +34,12 @@ class CreateOrderTest extends TestCase
         $response = $this->postJson(route('orders.store'), $data);
         $response->assertSuccessful();
         $response->assertJsonStructure([
-            'status',
-            'code'
+            'success',
+            'type',
+            'data'=>['code'],
+            'message'
         ]);
-        $code_uuid = $response->json('code');
+        $code_uuid = $response->json('data')['code'];
         $this->assertDatabaseCount('orders', 1);
         $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::PENDING_STATUS]);
         $order = Order::first();
@@ -61,10 +63,12 @@ class CreateOrderTest extends TestCase
         $response = $this->postJson(route('orders.store'), $data);
         $response->assertSuccessful();
         $response->assertJsonStructure([
-            'status',
-            'code'
+            'success',
+            'type',
+            'data'=>['code'],
+            'message'
         ]);
-        $code_uuid = $response->json('code');
+        $code_uuid = $response->json('data')['code'];
         $this->assertDatabaseCount('orders', 1);
         $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::PENDING_STATUS]);
         $order = Order::first();
@@ -88,10 +92,12 @@ class CreateOrderTest extends TestCase
         $response = $this->postJson(route('orders.store'), $data);
         $response->assertSuccessful();
         $response->assertJsonStructure([
-            'status',
-            'code'
+            'success',
+            'type',
+            'data'=>['code'],
+            'message'
         ]);
-        $code_uuid = $response->json('code');
+        $code_uuid = $response->json('data')['code'];
         $this->assertDatabaseCount('orders', 1);
         $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::REQUESTED_STATUS]);
         $order = Order::first();
