@@ -1,10 +1,10 @@
 version: "3.8"
 services:
-    php_delivery:
+    php_micro_service_deliveries:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: delivery_php
+        container_name: micro_service_deliveries_php
         # restart: always
         tty: true
         working_dir: /var/www/html/
@@ -12,25 +12,25 @@ services:
             - ./:/var/www/html/
             - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         networks:
-            - delivery-micro-network
+            - micro_service_deliveries-micro-network
 
-    nginx_delivery:
+    nginx_micro_service_deliveries:
         depends_on:
-            - php_delivery
+            - php_micro_service_deliveries
         build:
             context: ./nginx
             dockerfile: Dockerfile
-        container_name: nginx_delivery
+        container_name: nginx_micro_service_deliveries
         # restart: always
         tty: true
         ports:
             - "${APP_PORT}:80"
         networks:
-            - delivery-micro-network
+            - micro_service_deliveries-micro-network
 
-    mysql_delivery:
+    mysql_micro_service_deliveries:
         image: mariadb
-        container_name: db_delivery
+        container_name: db_micro_service_deliveries
         env_file:
             - .env
         environment:
@@ -41,13 +41,13 @@ services:
         ports:
         - "${DB_PORT}:3306"
         volumes:
-        - mysql_delivery:/var/lib/mysql
+        - mysql_micro_service_deliveries:/var/lib/mysql
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
-        - delivery-micro-network
+        - micro_service_deliveries-micro-network
 
 volumes:
-    mysql_delivery:
+    mysql_micro_service_deliveries:
 
 networks:
-    delivery-micro-network:
+    micro_service_aleira-micro-network:
