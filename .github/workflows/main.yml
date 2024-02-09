@@ -18,10 +18,7 @@ jobs:
         run: docker build -t micro_service_deliveries_php .
 
       - name: Run Docker Container
-        run: docker run -d -p 8000:8000 micro_service_deliveries_php
-
-      - name: Run Laravel Migrations
-        run: docker exec -it micro_service_deliveries_php php artisan migrate
+        run: docker run -d -p 8000:8000 --name my_container_test micro_service_deliveries_php
 
       - name: Run Laravel Tests
-        run: docker exec -it micro_service_deliveries_php php artisan test
+        run: docker exec -it my_container_test php artisan test
