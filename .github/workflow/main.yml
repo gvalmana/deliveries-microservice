@@ -1,0 +1,30 @@
+name: CI/CD Workflow with Laravel and Docker
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build -t micro_service_deliveries_php .
+
+      - name: Run Docker Container
+        run: docker run -d -p 8000:8000 micro_service_deliveries_php
+
+      - name: Install Composer Dependencies
+        run: docker exec -it micro_service_deliveries_php composer install
+
+      - name: Run Laravel Migrations
+        run: docker exec -it micro_service_deliveries_php php artisan migrate
+
+      - name: Run Laravel Tests
+        run: docker exec -it micro_service_deliveries_php php artisan test
