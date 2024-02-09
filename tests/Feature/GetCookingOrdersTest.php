@@ -17,7 +17,7 @@ class GetCookingOrdersTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    public function testGetCookingOrders()
+    public function test_get_cooking_orders()
     {
         $params = [
             'pagination' => [
