@@ -29,11 +29,7 @@ class ProcessCreatedOrderJob implements ShouldQueue
 
     public function handle(ISendStockIngredientsRequest $sendStockIngredients): void
     {
-        $ingredients[] = $this->getOrdersIngredients();
-        $data = [
-            'order_code' => $this->order->code,
-            'products' => $ingredients
-        ];
+        $data = ProcessCreatedOrderJob::prepareData($this->order);
         $sendStockIngredients->sendStockIngredients($data);
         $this->order->update([
             'is_sent' => true,
@@ -61,5 +57,23 @@ class ProcessCreatedOrderJob implements ShouldQueue
     public function failed(Throwable $exception): void
     {
         //
+    }
+
+    public static function prepareData(Order $order): array
+    {
+        $ingredients = [];
+        $recipe = $order->recipe;
+        $recipeItems = $recipe->ingredients;
+        foreach ($recipeItems as $item) {
+            $ingredients[] = [
+                'name' => $item->product->name,
+                'quantity' => $item->quantity
+            ];
+        }
+        $data = [
+            'order_code' => $order->code,
+            'products' => $ingredients
+        ];
+        return $data;
     }
 }

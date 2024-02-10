@@ -10,7 +10,9 @@ use Junges\Kafka\Facades\Kafka;
 use Junges\Kafka\Message\Message;
 use App\Http\UseCases\Implementations\SendStockIngredientsKafkaProducer;
 use App\Http\UseCases\ISendStockIngredientsRequest;
+use App\Jobs\ProcessCreatedOrderJob;
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class KafkaPublisherTest extends TestCase
 {
@@ -19,10 +21,9 @@ class KafkaPublisherTest extends TestCase
     {
         $this->seed();
         Kafka::fake();
-        $this->app->bind(ISendStockIngredientsRequest::class, SendStockIngredientsKafkaProducer::class);
-        $response = $this->postJson(route('orders.store'), []);
-        $response->assertSuccessful();
-        $order = Order::first();
+        $publicher = $this->app->make(SendStockIngredientsKafkaProducer::class);
+        $order = Order::factory()->create(['status' => Order::PENDING_STATUS, 'code' => 'test']);
+        $publicher(ProcessCreatedOrderJob::prepareData($order));
         Kafka::assertPublishedOn(StockOrderMessage::TOPIC, null, function(Message $message) use($order){
             $key_correct = $message->getKey() === $order->code;
             $boddy_keys = array_key_exists('order_code', $message->getBody()['data']) && array_key_exists('products', $message->getBody()['data']);
@@ -37,7 +38,7 @@ class KafkaPublisherTest extends TestCase
                     break;
                 }
             }
-            return $key_correct && $boddy_keys && $correct_keys && $order_id_correct && $correct_types;
+            return $key_correct && $boddy_keys && $order_id_correct && $correct_keys && $correct_types;
         });
     }
 }
