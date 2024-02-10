@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class OrderUpdateWebhookJob implements ShouldQueue
+class OrderUpdateWebhookJob
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -25,6 +25,7 @@ class OrderUpdateWebhookJob implements ShouldQueue
      */
     public function handle(IOrderRepository $repository): void
     {
+        Log::debug('Updating order status in the Job' . json_encode($this->data) . ' at '.microtime(true));
         $orderCode = $this->data['order_code'];
         $repository->setCookingStatus($orderCode);
     }
