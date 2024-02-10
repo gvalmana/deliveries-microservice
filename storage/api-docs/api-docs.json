@@ -251,9 +251,32 @@
                                         },
                                         "data": {
                                             "properties": {
-                                                "code": {
+                                                "name": {
                                                     "type": "string",
-                                                    "example": "2302faca-7f66-4078-86d4-abb0ab54b675"
+                                                    "example": "Ensalada de Pollo y Aguacate"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Una deliciosa ensalada con trozos de pollo a la parrilla, aguacate, tomate, y hojas verdes. Aderezada con una vinagreta de limón y miel."
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "ingredients"
+                                                        ],
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tomato"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
                                                 }
                                             },
                                             "type": "object"
