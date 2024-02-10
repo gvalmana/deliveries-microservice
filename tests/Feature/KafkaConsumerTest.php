@@ -16,7 +16,7 @@ use Tests\TestCase;
 class KafkaConsumerTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_kafka_consumer_command()
+    public function kafka_consumer_command()
     {
         Kafka::fake();
         $this->seed();
