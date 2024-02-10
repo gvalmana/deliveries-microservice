@@ -42,4 +42,4 @@ Route::get('/healtcheck', function() {
         'status' => true,
         'message' => 'OK, I am healthy!'
     ]);
-})->name('healtcheck')->middleware('log.http.requests');
+})->name('healtcheck');

@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\Repositories\IFoodRecipeRepository;
 use App\Models\Repositories\IOrderRepository;
 use App\Models\Repositories\ListRepository;
+use Illuminate\Support\Facades\Log;
 
 class OrderRepository extends ListRepository implements IOrderRepository
 {
@@ -31,7 +32,7 @@ class OrderRepository extends ListRepository implements IOrderRepository
 
     private function setStatus(string $code, string $status)
     {
-        $this->modelClass->where('code', $code)->update(['status' => $status]);
+        $this->modelClass->firstOrFail('code', $code)->update(['status' => $status]);
     }
 
     public function insertOrder(int $recipeId)

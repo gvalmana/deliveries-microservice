@@ -23,6 +23,7 @@ use App\Models\Repositories\Implementations\FoodRecipeRepository;
 use App\Models\Repositories\Implementations\OrderRepository;
 use App\Models\Repositories\IOrderRepository;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,9 +34,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         App::bind(ISendStockIngredientsRequest::class, function () {
-            if(config("globals.comomunication_protocol") =='http'){
+            if(config("globals.comunication_protocol") =='http'){
                 return new SendStockIngredientsHttpRequest(app(IStockRequestAdapter::class), app(IOrderRepository::class));
-            } elseif (config("globals.comomunication_protocol") =='kafka'){
+            } elseif (config("globals.comunication_protocol") =='kafka'){
                 return new SendStockIngredientsKafkaProducer();
             } else {
                 return new SendStockIngredientsRequestTest();
