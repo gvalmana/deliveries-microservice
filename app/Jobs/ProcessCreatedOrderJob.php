@@ -29,7 +29,6 @@ class ProcessCreatedOrderJob implements ShouldQueue
 
     public function handle(ISendStockIngredientsRequest $sendStockIngredients): void
     {
-        Log::debug("Dispatching ProcessCreatedOrderJob");
         $ingredients[] = $this->getOrdersIngredients();
         $data = [
             'order_code' => $this->order->code,

@@ -22,17 +22,19 @@ class OrderRepository extends ListRepository implements IOrderRepository
 
     public function setCookingStatus(string $code)
     {
-        $this->setStatus($code, Order::COOKING_STATUS);
+        return $this->setStatus($code, Order::COOKING_STATUS);
     }
 
     public function setRequestedStatus(string $code)
     {
-        $this->setStatus($code, Order::REQUESTED_STATUS);
+        return $this->setStatus($code, Order::REQUESTED_STATUS);
     }
 
     private function setStatus(string $code, string $status)
-    {
-        $this->modelClass->firstOrFail('code', $code)->update(['status' => $status]);
+    {   $order = $this->modelClass->where('code', $code)->first();
+        $order->status = $status;
+        $order->save();
+        return $order;
     }
 
     public function insertOrder(int $recipeId)
