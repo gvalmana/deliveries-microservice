@@ -15,7 +15,7 @@ class StockRequestImpl extends BaseAdapter implements IStockRequestAdapter
 
     public function sendStockIngredients(array $data)
     {
-        $path = '/orders/get-order';
+        $path = config('globals.stock_microservice.get_order_path');
         $this->addHeader('Authorization', 'Bearer '.config('globals.security_key'));
         $response = $this->sendPostSecuredRequest($this->url.$path, $data);
         return $response;
