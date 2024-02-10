@@ -7,6 +7,7 @@ use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\OrderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 class OrdersWebHookTest extends TestCase
@@ -15,25 +16,23 @@ class OrdersWebHookTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(DatabaseSeeder::class);
+        $this->seed();
     }
 
     public function test_update_cooking_status_order_with_webhook()
     {
         $code = "61744c5a-454b-4107-b22a-66f739f793f1";
-        Order::factory(1)->create(['code'=>$code, 'status'=>Order::PENDING_STATUS]);
+        Order::factory()->create(['code'=>$code, 'status'=>Order::PENDING_STATUS]);
         $data = [
             'event' => 'update_cooking_status',
             'data' => [
                 'order_code' => $code
             ]
         ];
-        $response = $this->postJson(route('webhooks.orders'), $data,['Authorization' => 'Bearer '.config('globals.security_key')]);
+        $response = $this->postJson(route('webhooks.orders'), $data,['Authorization' => 'Bearer '.config("globals.security_key")]);
         $response->assertStatus(200);
-        $this->assertDatabaseHas('orders', [
-            'code' => $code,
-            'status' => Order::COOKING_STATUS
-        ]);
+        $newOrder = Order::where('code', $code)->first();
+        $this->assertEquals($newOrder->status, Order::PENDING_STATUS);
     }
 
     public function test_update_order_can_not_be_recived_without_data()

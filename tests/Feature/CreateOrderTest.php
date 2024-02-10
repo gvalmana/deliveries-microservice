@@ -99,10 +99,10 @@ class CreateOrderTest extends TestCase
         ]);
         $code_uuid = $response->json('data')['code'];
         $this->assertDatabaseCount('orders', 1);
-        $this->assertDatabaseHas('orders', ['is_sent' => 1,'code'=> $code_uuid, 'status' => Order::REQUESTED_STATUS]);
-        $order = Order::first();
-        $this->assertEquals($order->code, $code_uuid);
-        $this->assertTrue($order->is_sent);
+        $newOrder = Order::where('code', $code_uuid)->first();
+        $this->assertEquals($newOrder->status, Order::PENDING_STATUS);
+        $this->assertEquals($newOrder->code, $code_uuid);
+        $this->assertTrue($newOrder->is_sent);
     }
 
     public function creating_order_with_kafka_message()
