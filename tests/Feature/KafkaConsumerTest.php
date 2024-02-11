@@ -44,8 +44,6 @@ class KafkaConsumerTest extends TestCase
             })->build();
 
         $consumer->consume();
-        $updatedOrder = Order::where('code', $order_code)->first();
-        $this->assertEquals(Order::COOKING_STATUS, $updatedOrder->status);
-        //$this->assertDatabaseHas('orders',['status'=>Order::COOKING_STATUS]);
+        $this->assertDatabaseHas('orders',['status'=>Order::COOKING_STATUS]);
     }
 }
