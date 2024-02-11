@@ -8,7 +8,7 @@ on:
     branches:
       - master
 jobs:
-  laravel-tests:
+  build-image-and-run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -50,3 +50,8 @@ jobs:
 
       - name: Run Docker Container
         run: docker run -d -p 8000:8000 --name my_container_test micro_service_deliveries_php
+
+      - name: Run Laravel Tests
+        run: docker exec my_container_test /bin/sh -c "php artisan test"
+      - name: Show Container Logs
+        run: docker logs my_container_test
