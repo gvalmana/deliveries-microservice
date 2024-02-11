@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\OrderRequested;
+use App\Listeners\OrderRequestedListener;
+use App\Models\Order;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        OrderRequested::class => [
+            OrderRequestedListener::class
+        ]
     ];
 
     /**

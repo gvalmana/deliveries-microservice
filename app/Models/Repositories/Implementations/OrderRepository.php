@@ -6,7 +6,7 @@ use App\Models\Repositories\IFoodRecipeRepository;
 use App\Models\Repositories\IOrderRepository;
 use App\Models\Repositories\ListRepository;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Str;
 class OrderRepository extends ListRepository implements IOrderRepository
 {
     public function __construct()
@@ -40,7 +40,9 @@ class OrderRepository extends ListRepository implements IOrderRepository
     public function insertOrder(int $recipeId)
     {
         $order = $this->modelClass::create([
-            'recipe_id' => $recipeId
+            'recipe_id' => $recipeId,
+            'code' => Str::uuid()->toString(),
+            'status' => Order::PENDING_STATUS
         ]);
         return $order;
     }

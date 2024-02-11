@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderRequested;
 use App\Http\UseCases\IOrderStore;
 use App\Jobs\ProcessCreatedOrderJob;
 use App\Traits\HttpResponsable;
@@ -45,7 +46,8 @@ final class OrderStoreController extends Controller
     {
         $data = $request->all();
         $order = $service($data);
-        ProcessCreatedOrderJob::dispatchAfterResponse($order);
+        //ProcessCreatedOrderJob::dispatchAfterResponse($order);
+        OrderRequested::dispatch($order);
         return $this->makeResponseCreated(['code'=> $order->code], 'Order created successfully');
     }
 }

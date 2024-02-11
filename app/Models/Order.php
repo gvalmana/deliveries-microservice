@@ -20,7 +20,8 @@ class Order extends Model
         'recipe_id',
         'status',
         'is_sent',
-        'delivery_date'
+        'delivery_date',
+        'code'
     ];
     protected $casts = [
         'status' => 'string',
