@@ -10,7 +10,7 @@
 - En caso de tener docker instalado debe ejecutarse docker-compose up para la creación de los contenedores de la plataforma
 - copiar contenido del fihcero .env.example para las variabels de configuración
 - en caso de no tener docker instalado deben ejecutarse los comandos necesarios para la instalación y configuración de un proyecto en Laravel
-- debe ejecutarse** php artisan migrate --seed** en caso de espelgarse localmente sin docker para la carga de los datos de pruebas iniciales
+- debe ejecutarse ** php artisan migrate --seed** en caso de espelgarse localmente sin docker para la carga de los datos de pruebas iniciales
 
 ### Variables de configuración necesarias
 **STOCK_INGREDIENTS_URL** - representa la URL del microservicio que gestiona el stock de productos (bodega)
