@@ -35,6 +35,7 @@ class CheckNotSentOrdersCommand extends Command
         $this->logAndOutput('Checking not sent orders...');
         $orders = $orderRepo->getNotSentOrders();
         foreach ($orders as $order) {
+            $this->logAndOutput('Sending request for order: ' . $order->code);
             $data = StockOrderMessage::prepareData($order);
             $service->sendStockIngredients($data);
         }

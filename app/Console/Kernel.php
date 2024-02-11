@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:check-not-sent-orders-command')->everyThreeMinutes();
+        $schedule->command('app:delivery-orders-command')->everyFiveMinutes();
     }
 
     /**

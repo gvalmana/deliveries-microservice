@@ -9,4 +9,6 @@ interface IOrderRepository
     public function setRequestedStatus(string $code);
     public function insertOrder(int $recipe_id);
     public function getNotSentOrders();
+    public function setCompletedStatus(string $code);
+    public function getCookingOrdersLastMinute();
 }
