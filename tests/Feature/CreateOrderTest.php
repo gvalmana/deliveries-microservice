@@ -62,7 +62,7 @@ class CreateOrderTest extends TestCase
         $conector = $this->app->make(SendStockIngredientsHttpRequest::class);
 
         $order = Order::factory()->create(['code' => '2302faca-7f66-4078-86d4-abb0ab54b675']);
-        $data = OrderRequestedListener::prepareData($order);
+        $data = StockOrderMessage::prepareData($order);
         $conector($data);
         $code_uuid = $order->code;
         $this->assertDatabaseHas('orders',['code'=> $code_uuid,'status' => Order::PENDING_STATUS]);
@@ -81,7 +81,7 @@ class CreateOrderTest extends TestCase
         $conector = $this->app->make(SendStockIngredientsHttpRequest::class);
 
         $order = Order::factory()->create(['code' => '2302faca-7f66-4078-86d4-abb0ab54b675']);
-        $data = OrderRequestedListener::prepareData($order);
+        $data = StockOrderMessage::prepareData($order);
         $conector($data);
         $code_uuid = $order->code;
         $this->assertDatabaseHas('orders',['code'=> $code_uuid,'status' => Order::REQUESTED_STATUS]);

@@ -77,8 +77,19 @@ services:
         - zookeeper
         networks:
             - micro_service_aleira-micro-network
+
+    redis:
+        image: 'redis'
+        container_name: micro_service_aleira_redis
+        ports:
+        - 6379:6379
+        volumes:
+        - dev_redis:/data
+        networks:
+            - micro_service_aleira-micro-network
+
 volumes:
     mysql_micro_service_deliveries:
-
+    dev_redis:
 networks:
     micro_service_aleira-micro-network:

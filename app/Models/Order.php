@@ -30,13 +30,18 @@ class Order extends Model
         'delivery_date' => 'datetime'
     ];
 
-    protected $hiddens = ['recipe_id','is_sent'];
+    protected $hiddens = ['recipe_id', 'created_at'];
 
     public const RELATIONS = ['recipe'];
 
     public function recipe()
     {
         return $this->belongsTo(FoodRecipe::class, 'recipe_id', 'id');
+    }
+
+    public function scopeNotSent($query)
+    {
+        return $query->where('is_sent', false);
     }
 
     public static function booted()

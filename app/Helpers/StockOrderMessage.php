@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class StockOrderMessage extends KafkaMessageStructure
@@ -21,5 +22,23 @@ class StockOrderMessage extends KafkaMessageStructure
             'date'=>$this->date,
             'data'=>$this->data
         ];
+    }
+
+    public static function prepareData(Order $order): array
+    {
+        $ingredients = [];
+        $recipe = $order->recipe;
+        $recipeItems = $recipe->ingredients;
+        foreach ($recipeItems as $item) {
+            $ingredients[] = [
+                'name' => $item->product->name,
+                'quantity' => $item->quantity
+            ];
+        }
+        $data = [
+            'order_code' => $order->code,
+            'products' => $ingredients
+        ];
+        return $data;
     }
 }

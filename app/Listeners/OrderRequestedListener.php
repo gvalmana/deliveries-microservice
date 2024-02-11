@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderRequested;
+use App\Helpers\StockOrderMessage;
 use App\Http\UseCases\ISendStockIngredientsRequest;
 use App\Models\Order;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,7 +21,7 @@ class OrderRequestedListener implements ShouldQueue
     public function handle(OrderRequested $event): void
     {
         $this->order = $event->order;
-        $data = OrderRequestedListener::prepareData($this->order);
+        $data = StockOrderMessage::prepareData($this->order);
         $this->sendStockIngredients->sendStockIngredients($data);
         $this->order->update([
             'is_sent' => true,
@@ -28,38 +29,38 @@ class OrderRequestedListener implements ShouldQueue
         ]);
     }
 
-    public function getOrdersIngredients(): array
-    {
-        $ingredients = [];
-        $recipe = $this->order->recipe;
-        $recipeItems = $recipe->ingredients;
-        foreach ($recipeItems as $item) {
-            $ingredients['name'] = $item->product->name;
-            $ingredients['quantity'] = $item->quantity;
-        }
-        return $ingredients;
-    }
+    // public function getOrdersIngredients(): array
+    // {
+    //     $ingredients = [];
+    //     $recipe = $this->order->recipe;
+    //     $recipeItems = $recipe->ingredients;
+    //     foreach ($recipeItems as $item) {
+    //         $ingredients['name'] = $item->product->name;
+    //         $ingredients['quantity'] = $item->quantity;
+    //     }
+    //     return $ingredients;
+    // }
 
     public function getOrder(): Order
     {
         return $this->order;
     }
 
-    public static function prepareData(Order $order): array
-    {
-        $ingredients = [];
-        $recipe = $order->recipe;
-        $recipeItems = $recipe->ingredients;
-        foreach ($recipeItems as $item) {
-            $ingredients[] = [
-                'name' => $item->product->name,
-                'quantity' => $item->quantity
-            ];
-        }
-        $data = [
-            'order_code' => $order->code,
-            'products' => $ingredients
-        ];
-        return $data;
-    }
+    // public static function prepareData(Order $order): array
+    // {
+    //     $ingredients = [];
+    //     $recipe = $order->recipe;
+    //     $recipeItems = $recipe->ingredients;
+    //     foreach ($recipeItems as $item) {
+    //         $ingredients[] = [
+    //             'name' => $item->product->name,
+    //             'quantity' => $item->quantity
+    //         ];
+    //     }
+    //     $data = [
+    //         'order_code' => $order->code,
+    //         'products' => $ingredients
+    //     ];
+    //     return $data;
+    // }
 }

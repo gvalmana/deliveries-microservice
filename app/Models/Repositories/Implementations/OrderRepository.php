@@ -46,4 +46,9 @@ class OrderRepository extends ListRepository implements IOrderRepository
         ]);
         return $order;
     }
+
+    public function getNotSentOrders()
+    {
+        return $this->modelClass->notSent()->get();
+    }
 }
