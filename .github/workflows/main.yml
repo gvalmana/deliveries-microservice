@@ -61,11 +61,11 @@ jobs:
       - name: Deploy to Coinhost
         uses: appleboy/ssh-action@master
         env:
-          DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/curso-devs-fastapi-demo:lastest
+          DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:lastest
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY_SECRET_COINHOST }}
+          password: ${{ secrets.PASSWORD }}
           envs: DOCKER_IMAGE
           script: |
             echo "Download new version"
