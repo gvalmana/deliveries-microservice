@@ -65,7 +65,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY_SECRET_COINHOST }}
+          password: ${{ secrets.PASSWORD }}
           envs: DOCKER_IMAGE
           script: |
             echo "Download new version"
