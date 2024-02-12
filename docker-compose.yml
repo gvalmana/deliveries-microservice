@@ -14,7 +14,7 @@ services:
             - ./:/var/www/html/
             - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         networks:
-            - micro_service_aleira-micro-network
+            - micro-services-aleria-network
 
     nginx-micro-service-deliveries:
         depends_on:
@@ -28,7 +28,7 @@ services:
         ports:
             - "${APP_PORT}:80"
         networks:
-            - micro_service_aleira-micro-network
+            - micro-services-aleria-network
 
     mysql-micro-service-deliveries:
         image: mariadb
@@ -47,7 +47,7 @@ services:
         - mysql-micro-service-deliveries:/var/lib/mysql
         - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
         networks:
-        - micro_service_aleira-micro-network
+        - micro-services-aleria-network
     zookeeper:
         image: wurstmeister/zookeeper:latest
         container_name: zookeeper-aleria-network
@@ -58,7 +58,7 @@ services:
             ZOO_PORT: 2181
             ZOO_SERVERS: server.1=zookeeper:2888:3888
         networks:
-            - micro_service_aleira-micro-network
+            - micro-services-aleria-network
     kafka:
         image: wurstmeister/kafka:latest
         container_name: kafka-aleria-network
@@ -76,7 +76,7 @@ services:
         depends_on:
         - zookeeper
         networks:
-            - micro_service_aleira-micro-network
+            - micro-services-aleria-network
 
     redis:
         image: 'redis'
@@ -86,10 +86,10 @@ services:
         volumes:
         - dev_redis:/data
         networks:
-            - micro_service_aleira-micro-network
+            - micro-services-aleria-network
 
 volumes:
     mysql-micro-service-deliveries:
     dev_redis:
 networks:
-    micro_service_aleira-micro-network:
+    micro-services-aleria-network:
