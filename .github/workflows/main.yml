@@ -21,8 +21,6 @@ jobs:
       run: sudo apt-get install -y librdkafka-dev php-pear
     - name: Install PHP rdkafka
       run: sudo pecl install rdkafka
-    - name: Enable PHP rdkafka extension
-      run: echo "extension=rdkafka.so" >> ${{ ini_get("loaded_configuration_file") }}
     - name: Install Dependencies
       run: composer install
     - name: Generate key
