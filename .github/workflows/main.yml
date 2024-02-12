@@ -36,7 +36,8 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test
-
+    - name: Run Static Analysis
+      run: ./vendor/bin/phpstan analyse app --error-format=github
   build-image:
     runs-on: ubuntu-latest
     needs: tests
