@@ -34,6 +34,6 @@ jobs:
         APP_ENV: testing
         DB_CONNECTION: sqlite
         DB_DATABASE: ":memory:"
-      run: php artisan test >> storage/logs/laravel.log
+      run: php artisan test
     - name: Check Laravel Log
       run: cat storage/logs/laravel.log
