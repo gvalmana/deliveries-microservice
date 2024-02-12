@@ -18,12 +18,10 @@ class UpdateOrderStatus implements IOrderWebhookStatusUpdate
         return $this->updateOrderStatus($data);
     }
 
-    public function updateOrderStatus(array $data): void
+    public function updateOrderStatus(array $data)
     {
-        Log::debug('Start updating order status' . json_encode($data) . ' at '.microtime(true));
         $event = $data['event'];
         if ($event == 'update_cooking_status') {
-            Log::debug('Event correct updating cooking status' . json_encode($data) . ' at '.microtime(true));
             $info = $data['data'];
             OrderUpdateWebhookJob::dispatch($info);
         }

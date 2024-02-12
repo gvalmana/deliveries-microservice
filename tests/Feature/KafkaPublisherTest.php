@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 class KafkaPublisherTest extends TestCase
 {
     use RefreshDatabase;
-    public function creating_order_with_kafka_message()
+    public function test_creating_order_with_kafka_message()
     {
         $this->seed();
         Kafka::fake();
