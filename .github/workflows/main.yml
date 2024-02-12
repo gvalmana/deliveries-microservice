@@ -1,10 +1,10 @@
-name: Laravel Tests
+name: Laravel Tests and Build image
 
 on:
   push:
-    branches: [ "dev","main" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "dev","main" ]
+    branches: [ "main" ]
 
 jobs:
   tests:
@@ -38,18 +38,21 @@ jobs:
       run: php artisan test
     - name: Run Code Analysis
       run: ./vendor/bin/phpstan analyse app --error-format=github
-  build-image:
+  build-and-upload-docker-image:
     runs-on: ubuntu-latest
     needs: tests
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t micro_service_deliveries_php .
+      - name: docker build
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:${{ github.sha }} .
 
-      - name: Run Docker Container
-        run: docker run -d -p 8000:8000 --name my_container_test micro_service_deliveries_php
-
-      - name: Run Laravel Tests
-        run: docker exec my_container_test /bin/sh -c php artisan test
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: docker push
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:${{ github.sha }}

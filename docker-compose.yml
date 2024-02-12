@@ -1,12 +1,12 @@
 version: "3.8"
 services:
-    php_micro_service_deliveries:
+    php-micro-service-deliveries:
         depends_on:
-            - mysql_micro_service_deliveries
+            - mysql-micro-service-deliveries
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: micro_service_deliveries_php
+        container_name:  micro-service-deliveries-php
         # restart: always
         tty: true
         working_dir: /var/www/html/
@@ -16,13 +16,13 @@ services:
         networks:
             - micro_service_aleira-micro-network
 
-    nginx_micro_service_deliveries:
+    nginx-micro-service-deliveries:
         depends_on:
-            - php_micro_service_deliveries
+            - php-micro-service-deliveries
         build:
             context: ./nginx
             dockerfile: Dockerfile
-        container_name: nginx_micro_service_deliveries
+        container_name: nginx-micro-service-deliveries
         # restart: always
         tty: true
         ports:
@@ -30,9 +30,9 @@ services:
         networks:
             - micro_service_aleira-micro-network
 
-    mysql_micro_service_deliveries:
+    mysql-micro-service-deliveries:
         image: mariadb
-        container_name: db_micro_service_deliveries
+        container_name: db-micro-service-deliveries
         env_file:
             - .env
         environment:
@@ -44,7 +44,7 @@ services:
         ports:
         - "${DB_PORT}:3306"
         volumes:
-        - mysql_micro_service_deliveries:/var/lib/mysql
+        - mysql-micro-service-deliveries:/var/lib/mysql
         - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
         networks:
         - micro_service_aleira-micro-network
@@ -89,7 +89,7 @@ services:
             - micro_service_aleira-micro-network
 
 volumes:
-    mysql_micro_service_deliveries:
+    mysql-micro-service-deliveries:
     dev_redis:
 networks:
     micro_service_aleira-micro-network:
