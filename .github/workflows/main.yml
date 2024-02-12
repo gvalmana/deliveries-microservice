@@ -19,7 +19,7 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install PHP Dependencies
-      run: sudo apt-get install -y librdkafka-dev php-pear
+      run: sudo apt-get install
     - name: Install PHP rdkafka
       run: sudo pecl install rdkafka
     - name: Install Dependencies
