@@ -10,7 +10,7 @@ services:
         # restart: always
         tty: true
         volumes:
-            - ./:/var/www/html/
+            - ./:/var/www/html/public
             - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         networks:
             - micro-services-aleria-network
