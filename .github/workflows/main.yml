@@ -54,3 +54,44 @@ jobs:
       - name: Docker Push
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-upload-docker-image
+    steps:
+      - name: Deploy to Coinhost
+        uses: appleboy/ssh-action@master
+        env:
+          DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/curso-devs-fastapi-demo:lastest
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY_SECRET_COINHOST }}
+          envs: DOCKER_IMAGE
+          script: |
+            echo "Download new version"
+            docker pull $DOCKER_IMAGE
+            echo "Stop current version"
+            sleep 1
+            API=$(docker ps -q -f name=micro-service-deliveries-php)
+            if [! -z $API]
+            then
+              docker stop $API
+              docker rm $API
+            fi
+              docker run -d --name micro-service-deliveries-php -p 80:8080 $DOCKER_IMAGE
+      - name: Test Deployment
+        env:
+          ENDPOINT: ${{ secrets.ENDPOINT }}
+        run: |
+          docker exec -it micro-service-deliveries-php php artisan test
+      - name: Check Service on coinhost
+        env:
+          ENDPOINT: ${{ secrets.ENDPOINT }}
+        run: |
+          RESPONSE=$(curl -o /dev/null -s -w "%{http_code}\n" ${$ENDPOINT})
+          if [${RESPONSE} -ne "200"]
+          then
+            echo "Service unresponsive"
+            exit 1
+          fi
+            echo "Success!"
