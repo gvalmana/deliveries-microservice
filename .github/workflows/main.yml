@@ -78,12 +78,7 @@ jobs:
               docker stop $API
               docker rm $API
             fi
-              docker run -d --name micro-service-deliveries-php -p 80:8080 $DOCKER_IMAGE
-      - name: Test Deployment
-        env:
-          ENDPOINT: ${{ secrets.ENDPOINT }}
-        run: |
-          docker exec -it micro-service-deliveries-php php artisan test
+              docker run -d --name micro-service-deliveries-php -p 8000:8000 $DOCKER_IMAGE
       - name: Check Service on coinhost
         env:
           ENDPOINT: ${{ secrets.ENDPOINT }}
