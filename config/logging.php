@@ -75,7 +75,7 @@ return [
 
         'daily_custom_requests' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/custom_requests.log'),
+            'path' => storage_path('logs/laravel.log'),
             'level' => 'info',
             'days' => 7,
         ],
