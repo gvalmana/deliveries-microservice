@@ -3,8 +3,6 @@ name: Laravel Tests and Build image
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   tests:
