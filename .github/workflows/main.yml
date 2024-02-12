@@ -61,7 +61,7 @@ jobs:
       - name: Deploy to Coinhost
         uses: appleboy/ssh-action@master
         env:
-          DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:lastest
+          DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:latest
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
