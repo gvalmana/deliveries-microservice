@@ -20,7 +20,7 @@ jobs:
     - name: Install PHP Dependencies
       run: sudo apt-get install php-pear librdkafka-dev -y
     - name: Install PHP rdkafka
-      run: sudo apt install php-rdkafka #sudo pecl install rdkafka
+      run: sudo pecl install rdkafka -y && echo "extension=rdkafka.so" > ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
     - name: Install dependencies
