@@ -2,6 +2,7 @@
 composer install
 chmod 777 -R storage/
 php artisan key:generate
+cp .env.example .env
 php artisan config:cache
 php artisan config:clear
 php artisan cache:clear
