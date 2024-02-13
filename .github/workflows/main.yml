@@ -72,7 +72,7 @@ jobs:
             echo "Starting deployement"
             docker-compose up -d
             echo "Starting configuration"
-            docker exec -it ${{ vars.CONTAINER_NAME }} ./configuration.sh
+            docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
       - name: Checking Service
         env:
           ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
