@@ -77,8 +77,6 @@ jobs:
             docker-compose up -d
             echo "Starting configuration"
             docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
-      - name: Join to Network
-        run: docker network connect aleria-network ${{ vars.CONTAINER_NAME }}
       - name: Checking Service
         env:
           ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
