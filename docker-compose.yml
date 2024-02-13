@@ -15,6 +15,16 @@ services:
         networks:
             - micro-services-aleria-network
 
+    supervisor:
+        build:
+            context: ./supervisor
+            dockerfile: Dockerfile
+        container_name: deliveries-supervisor
+        volumes:
+        - ./src:/var/www/html
+        networks:
+        - micro-services-aleria-network
+
     nginx-micro-service-deliveries:
         depends_on:
             - php-micro-service-deliveries
