@@ -69,7 +69,10 @@ jobs:
           envs: PROJECT_PATH
           script: |
             echo "Moving to project path"
+            cd ${PROJECT_PATH}
+            echo "Starting deployement"
             docker-compose up -d
+            echo "Starting configuration"
             docker exec -it ${{ vars.CONTAINER_NAME }} ./configuration.sh
       - name: Checking Service
         env:
