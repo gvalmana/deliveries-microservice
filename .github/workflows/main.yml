@@ -75,6 +75,7 @@ jobs:
             echo "Moving to project path"
             cd ${PROJECT_PATH}
             echo "Starting deployement"
+            docker pull ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php
             docker-compose up -d --build
             echo "Starting configuration"
             docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
