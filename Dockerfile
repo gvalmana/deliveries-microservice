@@ -51,9 +51,6 @@ RUN composer fund
 RUN composer dump-autoload
 COPY .env.example .env
 
-RUN php artisan key:generate
-RUN chmod +x ./configuration.sh
-RUN ./configuration.sh
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
 CMD ["php-fpm"]
