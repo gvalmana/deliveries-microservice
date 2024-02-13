@@ -24,8 +24,6 @@ class KafkaConsumerCommand extends Command
             ->withAutoCommit()
             ->withHandler(function(KafkaConsumerMessage $message) use ($updater){
                 $body = $message->getBody();
-                $this->logAndOutput($message->getKey());
-                $this->logAndOutput(json_encode($body));
                 $updater($body);
             })
             ->build();
