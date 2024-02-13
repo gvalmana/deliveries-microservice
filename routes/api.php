@@ -40,6 +40,6 @@ Route::group(['prefix' => 'webhooks','middleware' => ['log.http.requests']], fun
 Route::get('/healtcheck', function() {
     return response()->json([
         'status' => true,
-        'message' => 'OK, I am healthy!'
+        'message' => 'OK, My name is ' . env('APP_NAME') . ', I am healthy!'
     ]);
 })->name('healtcheck');
