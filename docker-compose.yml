@@ -21,7 +21,7 @@ services:
             dockerfile: Dockerfile
         container_name: deliveries-supervisor
         volumes:
-        - ./src:/var/www/html
+        - ./:/var/www/html
         networks:
         - micro-services-aleria-network
 
