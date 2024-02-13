@@ -54,3 +54,33 @@ jobs:
       - name: Docker Push
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:latest
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        env:
+          PROJECT_PATH: ${{ vars.PROJECT_PATH }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          envs: PROJECT_PATH
+          script: |
+            echo "Moving to project path"
+            docker-compose up -d
+            docker exec -it ${{ vars.CONTAINER_NAME }} ./configuration.sh
+      - name: Checking Service
+        env:
+          ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
+        run: |
+          echo "Testing endpoint healtcheck"
+          RESPONSE=$(curl -o /dev/null -s -w "%{http_code}\n" ${ENDPOINT})
+          echo ${RESPONSE}
+          if [ ${RESPONSE} -ne "200" ]
+            then
+              echo "Service unresponsive"
+            exit 1
+          fi
+            echo "Deployement success!"
+
