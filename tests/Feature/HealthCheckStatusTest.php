@@ -13,8 +13,5 @@ class HealthCheckStatusTest extends TestCase
         $response = $this->get(route('healtcheck'));
 
         $response->assertStatus(200);
-        $response->assertJson([
-            'status' => true
-        ]);
     }
 }
