@@ -55,6 +55,7 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:latest
   deploy:
+    needs: build-and-upload-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: deploy
