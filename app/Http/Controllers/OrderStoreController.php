@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 /**
 * @OA\Info(title="API Delivery Microservice", version="1.0")
 *
-* @OA\Server(url="http://localhost:8000")
+* @OA\Server(url="http://95.183.53.25/:8000")
 */
 final class OrderStoreController extends Controller
 {
