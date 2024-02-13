@@ -75,9 +75,6 @@ jobs:
             echo "Moving to project path"
             cd ${PROJECT_PATH}
             echo "Starting deployement"
-            echo "Stopping containers"
-            docker container stop ${{ vars.CONTAINER_NAME }}
-            echo "Starting containers"
             docker-compose up -d --build
             echo "Starting configuration"
             docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
