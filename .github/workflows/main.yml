@@ -54,41 +54,40 @@ jobs:
       - name: Docker Push
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/micro-service-deliveries-php:latest
-  # deploy:
-  #   needs: tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: deploy
-  #       uses: appleboy/ssh-action@master
-  #       env:
-  #         PROJECT_PATH: ${{ vars.PROJECT_PATH }}
-  #       with:
-  #         host: ${{ secrets.HOST }}
-  #         username: ${{ secrets.USERNAME }}
-  #         password: ${{ secrets.PASSWORD }}
-  #         envs: PROJECT_PATH
-  #         script: |
-  #           echo "Moving to project path"
-  #           cd ${PROJECT_PATH}
-  #           git pull --progress -v --no-rebase "origin"
-  #           echo "Starting deployement"
-  #           echo "Stopping containers"
-  #           docker-compose down --remove-orphans
-  #           echo "Starting containers"
-  #           docker-compose up -d
-  #           echo "Starting configuration"
-  #           docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
-  #     - name: Checking Service
-  #       env:
-  #         ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
-  #       run: |
-  #         echo "Testing endpoint healtcheck"
-  #         RESPONSE=$(curl -o /dev/null -s -w "%{http_code}\n" ${ENDPOINT})
-  #         echo ${RESPONSE}
-  #         if [ ${RESPONSE} -ne "200" ]
-  #           then
-  #             echo "Service unresponsive"
-  #           exit 1
-  #         fi
-  #           echo "Deployement success!"
+  deploy:
+    needs: build-and-upload-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        env:
+          PROJECT_PATH: ${{ vars.DEPLOY_PATH }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          envs: PROJECT_PATH
+          script: |
+            echo "Moving to project path"
+            cd ${PROJECT_PATH}
+            echo "Starting deployement"
+            echo "Stopping containers"
+            docker-compose stop ${{ vars.CONTAINER_NAME }}
+            echo "Starting containers"
+            docker-compose up -d
+            echo "Starting configuration"
+            docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
+      - name: Checking Service
+        env:
+          ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
+        run: |
+          echo "Testing endpoint healtcheck"
+          RESPONSE=$(curl -o /dev/null -s -w "%{http_code}\n" ${ENDPOINT})
+          echo ${RESPONSE}
+          if [ ${RESPONSE} -ne "200" ]
+            then
+              echo "Service unresponsive"
+            exit 1
+          fi
+            echo "Deployement success!"
 
