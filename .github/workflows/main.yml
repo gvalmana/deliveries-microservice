@@ -72,7 +72,7 @@ jobs:
             git pull --progress -v --no-rebase "origin"
             echo "Starting deployement"
             echo "Stopping containers"
-            docker-compose down
+            docker-compose down --remove-orphans
             echo "Starting containers"
             docker-compose up -d
             echo "Starting configuration"
