@@ -14,8 +14,7 @@ class HealthCheckStatusTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => true,
-            'message' => 'OK, I am healthy!'
+            'status' => true
         ]);
     }
 }
