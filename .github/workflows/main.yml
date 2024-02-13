@@ -69,6 +69,7 @@ jobs:
           script: |
             echo "Moving to project path"
             cd ${PROJECT_PATH}
+            git pull --progress -v --no-rebase "origin"
             echo "Starting deployement"
             docker-compose up -d
             echo "Starting configuration"
