@@ -62,7 +62,7 @@ jobs:
     needs: build-and-upload-docker-image
     runs-on: ubuntu-latest
     steps:
-      - name: deploy
+      - name: Deploy
         uses: appleboy/ssh-action@master
         env:
           PROJECT_PATH: ${{ vars.DEPLOY_PATH }}
