@@ -72,7 +72,7 @@ jobs:
             cd ${PROJECT_PATH}
             echo "Starting deployement"
             echo "Stopping containers"
-            docker-compose stop ${{ vars.CONTAINER_NAME }}
+            docker container stop ${{ vars.CONTAINER_NAME }}
             echo "Starting containers"
             docker-compose up -d --build
             echo "Starting configuration"
