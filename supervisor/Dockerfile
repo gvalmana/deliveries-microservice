@@ -7,4 +7,4 @@ RUN docker-php-ext-install pdo_mysql \
 
 ADD ./laravel-workers.conf /etc/supervisor/conf.d/
 
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
