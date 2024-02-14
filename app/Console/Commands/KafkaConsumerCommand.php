@@ -12,7 +12,7 @@ use Junges\Kafka\Contracts\KafkaConsumerMessage;
 class KafkaConsumerCommand extends Command
 {
     use LogAndOutputTrait;
-    protected $signature = 'consume:order-status-updated';
+    protected $signature = 'consume:stock-order-update';
 
     protected $description = "Consume Kafka messages from 'order-status-updated'.";
 
