@@ -25,7 +25,6 @@ class OrderUpdateWebhookJob
      */
     public function handle(IOrderRepository $repository): void
     {
-        Log::debug('Updating order status in the Job' . json_encode($this->data) . ' at '.microtime(true));
         $orderCode = $this->data['order_code'];
         $repository->setCookingStatus($orderCode);
     }

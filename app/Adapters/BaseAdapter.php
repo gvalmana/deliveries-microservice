@@ -43,13 +43,11 @@ abstract class BaseAdapter
 
     public function sendPostSecuredRequest(string $url, array $data = [])
     {
-        Log::debug($url);
         $response = Http::withHeaders($this->headers)
             ->withToken(config('globals.security_key'))
             ->retry(3, 100)
             ->timeout(15)
             ->post($url, $data);
-        Log::debug($response->json());
         if ($response->clientError() || $response->serverError()) {
             return $response->object();
         }
