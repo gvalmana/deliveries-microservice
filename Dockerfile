@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     dnsutils \
-    librdkafka-dev
+    librdkafka-dev \
+    supervisor
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
