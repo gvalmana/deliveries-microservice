@@ -51,7 +51,7 @@ RUN composer install
 RUN composer fund
 RUN composer dump-autoload
 COPY .env.example .env
-RUN supervisord -n -c /etc/supervisor/supervisord.conf && supervisorctl restart all
+RUN supervisord -n -s -c /etc/supervisor/supervisord.conf && supervisorctl restart all
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
 CMD ["php-fpm"]
