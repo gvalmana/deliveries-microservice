@@ -53,6 +53,8 @@ RUN composer dump-autoload
 COPY .env.example .env
 COPY ./supervisor/laravel-workers.conf /etc/supervisor/conf.d/laravel-workers.conf
 COPY ./cron/example-crontab /etc/cron.d/example-crontab
+RUN chmod +x /etc/cron.d/example-crontab
+RUN chown root:root /etc/cron.d/example-crontab
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
 CMD ["php-fpm"]
