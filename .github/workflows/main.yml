@@ -79,7 +79,7 @@ jobs:
             docker-compose up -d --build
             echo "Starting configuration"
             docker exec ${{ vars.CONTAINER_NAME }} ./configuration.sh
-            docker exec ${{ vars.CONTAINER_NAME }} supervisord -c /etc/supervisor/supervisord.conf -n -u root
+            docker exec ${{ vars.CONTAINER_NAME }} ./supervisor.sh
       - name: Checking Service
         env:
           ENDPOINT: ${{ vars.API_HEALTCHECK_ENDPOINT }}
