@@ -22,6 +22,7 @@ final class SendStockIngredientsKafkaProducer implements ISendStockIngredientsRe
             body: $this->configuration->getBody(),
             key: $this->configuration->getKey(),
         );
+        Log::info("Enviando mensage para o topico: " . $this->configuration->getTopic() . " com a chave: " . $this->configuration->getKey());
         $publisher = Kafka::publishOn($this->configuration->getTopic())->withMessage($message);
         $publisher->send();
     }
