@@ -1,7 +1,5 @@
 FROM php:8.1.0-fpm
-RUN docker-php-ext-install mbstring zip exif pcntl
-RUN docker-php-ext-install pdo pdo_mysql
-RUN docker-php-ext-install gd
+
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -21,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     dnsutils \
     librdkafka-dev \
     supervisor
+RUN docker-php-ext-install mbstring zip exif pcntl
+RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install gd
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
