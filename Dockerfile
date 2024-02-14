@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     dnsutils \
     librdkafka-dev \
-    supervisor
+    supervisor \
+    cron
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -51,7 +52,8 @@ RUN composer fund
 RUN composer dump-autoload
 COPY .env.example .env
 COPY ./supervisor/laravel-workers.conf /etc/supervisor/conf.d/laravel-workers.conf
-
+COPY ./cron/example-crontab /etc/cron.d/example-crontab
+RUN chmod 0644 /etc/cron.d/example-crontab
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
 CMD ["php-fpm"]
