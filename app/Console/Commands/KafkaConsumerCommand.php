@@ -18,11 +18,13 @@ class KafkaConsumerCommand extends Command
 
     public function handle(UpdateOrderStatus $updater)
     {
+        $this->logAndOutput('Consuming messages...');
         $topics = [StockOrderMessage::TOPIC_UPDATE];
         $consumer = Kafka::createConsumer($topics)
-            ->withBrokers(config("kafka.brokers"))
+            ->withBrokers(env('KAFKA_BROKERS'))
             ->withAutoCommit()
             ->withHandler(function(KafkaConsumerMessage $message) use ($updater){
+                $this->logAndOutput($message->getKey());
                 $body = $message->getBody();
                 $updater($body);
             })
