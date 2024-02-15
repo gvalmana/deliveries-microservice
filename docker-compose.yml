@@ -82,3 +82,4 @@ volumes:
     dev_redis:
 networks:
     deliveries-net:
+        driver: bridge

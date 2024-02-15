@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     dnsutils \
     librdkafka-dev \
-    nano
+    nano \
+    telnet
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
