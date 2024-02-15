@@ -1,37 +1,37 @@
 version: "3.8"
 services:
-    php-micro-service-deliveries:
+    php:
         depends_on:
-            - mysql-micro-service-deliveries
+            - mysql
         build:
             context: .
             dockerfile: Dockerfile
-        container_name:  micro-service-deliveries-php
+        container_name:  app-deliveries
         # restart: always
         tty: true
         volumes:
             - ./:/var/www/html/
             - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         networks:
-            - micro-services-aleria-network
+            - deliveries-net
 
-    nginx-micro-service-deliveries:
+    nginx:
         depends_on:
-            - php-micro-service-deliveries
+            - php
         build:
             context: ./nginx
             dockerfile: Dockerfile
-        container_name: nginx-micro-service-deliveries
-        # restart: always
+        container_name: api-deliveries
+        restart: always
         tty: true
         ports:
             - "${APP_PORT}:80"
         networks:
-            - micro-services-aleria-network
+            - deliveries-net
 
-    mysql-micro-service-deliveries:
+    mysql:
         image: mariadb
-        container_name: db-micro-service-deliveries
+        container_name: db-deliveries
         env_file:
             - .env
         environment:
@@ -43,12 +43,43 @@ services:
         ports:
         - "${DB_PORT}:3306"
         volumes:
-        - mysql-micro-service-deliveries:/var/lib/mysql
+        - db-data:/var/lib/mysql
         - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
         networks:
-        - micro-services-aleria-network
+        - deliveries-net
 
+    supervisor:
+        build:
+            context: ./supervisor
+            dockerfile: Dockerfile
+        container_name: supervisor-deliveries
+        volumes:
+        - ./:/var/www/html/
+        networks:
+        - deliveries-net
+
+    cron:
+        build:
+            context: ./cron
+            dockerfile: Dockerfile
+        container_name: cron-deliveries
+        volumes:
+        - ./:/var/www/html/
+        networks:
+        - deliveries-net
+
+    redis:
+        image: 'redis'
+        container_name: redis-deliveries
+        ports:
+        - 6379:6379
+        volumes:
+        - dev_redis:/data
+        networks:
+            - deliveries-net
 volumes:
-    mysql-micro-service-deliveries:
+    db-data:
+    dev_redis:
 networks:
-    micro-services-aleria-network:
+    deliveries-net:
+        driver: bridge

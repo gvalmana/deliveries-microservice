@@ -24,9 +24,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     dnsutils \
     librdkafka-dev \
-    supervisor \
-    cron \
-    nano
+    nano \
+    telnet
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -52,7 +51,7 @@ RUN composer install
 RUN composer fund
 RUN composer dump-autoload
 COPY .env.example .env
-COPY ./supervisor/laravel-workers.conf /etc/supervisor/conf.d/laravel-workers.conf
+# COPY ./supervisor/laravel-workers.conf /etc/supervisor/conf.d/laravel-workers.conf
 # COPY ./cron/example-crontab /etc/cron.d/example-crontab
 # RUN chmod +x /etc/cron.d/example-crontab
 # RUN chown root:root /etc/cron.d/example-crontab

@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
             } elseif (config("globals.comunication_protocol") =='kafka'){
                 return new SendStockIngredientsKafkaProducer();
             } else {
-                return new SendStockIngredientsRequestTest();
+                return new SendStockIngredientsHttpRequest(app(IStockRequestAdapter::class), app(IOrderRepository::class));
             }
         });
         //Repositories
