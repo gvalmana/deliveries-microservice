@@ -16,6 +16,10 @@ ENV STOCK_INGREDIENTS_URL='http://api-stock/api'
 ENV STOCK_INGREDIENTS_WEBHOOK_ORDER_PATH="/webhooks/orders"
 ENV REDIS_HOST=redis
 
+ENV PUSHER_APP_ID=1757100
+ENV PUSHER_APP_KEY=fbae1a5cebfef370361f
+ENV PUSHER_APP_SECRET=3d5ae1ed0333e322cf87
+
 # Set working directory
 WORKDIR /var/www/html/
 

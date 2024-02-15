@@ -18,10 +18,12 @@ use App\Http\UseCases\Implementations\SendStockIngredientsKafkaProducer;
 use App\Http\UseCases\Implementations\SendStockIngredientsRequestTest;
 use App\Http\UseCases\Implementations\UpdateOrderStatus;
 use App\Http\UseCases\IOrderWebhookStatusUpdate;
+use App\Models\Order;
 use App\Models\Repositories\IFoodRecipeRepository;
 use App\Models\Repositories\Implementations\FoodRecipeRepository;
 use App\Models\Repositories\Implementations\OrderRepository;
 use App\Models\Repositories\IOrderRepository;
+use App\Observers\OrderObserver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -60,5 +62,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Order::observe(OrderObserver::class);
     }
 }
