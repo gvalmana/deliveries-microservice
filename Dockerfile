@@ -3,6 +3,19 @@ FROM php:8.1.0-fpm
 # Copy composer.lock and composer.json into the working directory
 COPY composer.lock composer.json /var/www/html/
 
+ENV ALEGRIA_MARKETPLACE_URL=https://recruitment.alegra.com/api/farmers-market/buy
+ENV ALEGRIA_MARKETPLACE_AVAILABLE=0
+ENV APP_COMUNICATION_PROTOCOL=kafka
+ENV APP_SECURITY_KEY='123456'
+
+ENV KAFKA_BROKERS=kafka:9093
+ENV KAFKA_CONSUMER_GROUP_ID=my-group
+ENV KAFKA_DEBUG=true
+
+ENV STOCK_INGREDIENTS_URL='http://api-stock/api'
+ENV STOCK_INGREDIENTS_WEBHOOK_ORDER_PATH="/webhooks/orders"
+ENV REDIS_HOST=redis
+
 # Set working directory
 WORKDIR /var/www/html/
 
